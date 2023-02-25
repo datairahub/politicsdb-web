@@ -1,0 +1,125 @@
+body {
+  /* Texts and background */
+  --font-family-default: 'Source Sans Pro', sans-serif;
+  --font-size-default: 15px;
+
+  --text-color-default: #2a2f45;
+  --text-color-light: #3c4257;
+  --text-color-lighter: #7f8290;
+  --text-color-inverted: white;
+
+  --link-color-default: #4d90fe;
+  --link-color-active: #164241;
+  --link-color-light: #3c4257;
+  --link-color-lighter: #7f8290;
+  --link-color-inverted: white;
+
+  --background-color-default: white;
+  --background-color-light: #f7fafc;
+  --background-color-dark: #f3f6f9;
+  --background-color-darker: #e6ecef;
+
+  --modal-overlay-background-color: #1b2f449c;
+
+  /* Layout */
+  --layout-border-color-default: #ebeef5;
+  --layout-border-color-dark: #d8dbe0;
+
+  /* Main UI colors */
+  // Primary
+  --primary-color-default: #4d90fe;
+  --primary-color-strong: #087be3;
+  --primary-color-light: #4d90fe;
+  // Info
+  --info-color-default: #58a7f5;
+  --info-color-strong: #168bff;
+  --info-color-strongest: #083b6f;
+  // Error
+  --error-color-default: #f15663;
+  --error-color-strong: #e63434;
+  --error-color-strongest: #f156636e;
+  // Success
+  --success-color-default: #4caf50;
+  --success-color-strong: #398c3c;
+  --success-color-strongest: #4caf506e;
+  // Warning
+  --warning-color-default: #f8e5b9;
+  --warning-color-strong: #d39a04;
+  --warning-color-strongest: #ffc631b9;
+
+  /* Status messages */
+  // Default
+  --status-default-background-color: #e3e8ee;
+  --status-default-color: #4f566b;
+  --status-default-border-color: #d5dae6;
+  // Info
+  --status-info-background-color: #dbebff;
+  --status-info-color: #354c90;
+  --status-info-border-color: #b5c8f5;
+  // Success
+  --status-success-background-color: #cbf4c9;
+  --status-success-color: #0e6245;
+  --status-success-border-color: #b2deb0;
+  // Warning
+  --status-warn-background-color: #f8e5b9;
+  --status-warn-color: #bb5504;
+  --status-warn-border-color: #e4ccb8;
+  // Danger
+  --status-danger-background-color: #fde2dd;
+  --status-danger-color: #a41c4e;
+  --status-danger-border-color: #e495b2;
+
+  /* Inputs */
+  --input-background-default: white;
+  --input-text-color-default: inherit;
+  --input-border-color-default: #3c425747;
+  --input-border-color-light: #e3e8ee;
+  --input-border-color-dark: #dde3ea;
+  --input-placeholder-color-default: #aab2be;
+  --input-checkbox-color-default: #00d084;
+  --input-checkbox-color-strong: #34bd78;
+  // Disabled
+  --input-background-disabled: #ecf2f9;
+  --input-text-color-disabled: #62646f;
+  --input-border-color-disabled: transparent;
+  // Focus
+  --input-border-color-focus: #4d90fe;
+  --input-box-shadow-color-focus: #4d90fe66;
+  // Has errors
+  --input-border-color-error: #f15663;
+  --input-box-shadow-color-error: #e6343466;
+  // Inputs highlight
+  --highlight-background-color-default: #4d90fe;
+  --highlight-color-default: white;
+
+  /* Buttons */
+
+  // Default
+  --button-background-color-default: var(--background-color-default);
+  --button-text-color-default: var(--text-color-default);
+  --button-box-shadow-color-default: #f6f3f3;
+  // Default focus
+  --button-background-color-focus: var(--background-color-default);
+  --button-text-color-focus: var(--text-color-default);
+  --button-box-shadow-color-focus: #b0bbc266;
+  // Accent
+  --button-background-color-accent: #4d90fe;
+  --button-text-color-accent: white;
+  --button-box-shadow-color-accent: #4d90fe;
+  // Accent focus
+  --button-background-color-accent-focus: #4d90fe;
+  --button-text-color-accent-focus: white;
+  --button-box-shadow-color-accent-focus: #4d90fe9e;
+  // Danger
+  --button-background-color-danger: #f15663;
+  --button-text-color-danger: white;
+  --button-box-shadow-color-danger: #ff4141;
+  // Danger focus
+  --button-background-color-danger-focus: #f15663;
+  --button-text-color-danger-focus: white;
+  --button-box-shadow-color-danger-focus: #ff414180;
+  // Disabled
+  --button-background-color-disabled: #d3d9df;
+  --button-text-color-disabled: #2a2f45;
+  --button-border-color-disabled: #d3d9df;
+}
