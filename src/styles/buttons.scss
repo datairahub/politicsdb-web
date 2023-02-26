@@ -1,0 +1,95 @@
+.btn {
+  font-weight: 500;
+  min-height: 28px;
+  cursor: pointer;
+  border: 0;
+  border-radius: 4px;
+  padding: 4px 11px 5px;
+  margin: 2px;
+  transition: box-shadow 250ms ease, border-color 250ms ease;
+  background-color: var(--button-background-color-default);
+  color: var(--button-text-color-default);
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+              rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+              rgba(0, 0, 0, 0.12) 0px 1px 1px 0px,
+              var(--button-box-shadow-color-default) 0px 0px 0px 1px,
+              rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+              rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+              #00000026 0px 2px 5px 0px;
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px var(--button-box-shadow-color-focus);
+  }
+  &:active {
+    outline: 0;
+    box-shadow: 0 0 0 1px #d8d8d880 !important;
+  }
+
+  &--primary {
+    background-color: var(--button-background-color-accent);
+    color: var(--button-text-color-accent);
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(0, 0, 0, 0.12) 0px 1px 1px 0px,
+                var(--button-box-shadow-color-accent) 0px 0px 0px 1px,
+                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                #00000026 0px 2px 5px 0px;
+  }
+  &--danger {
+    background-color: var(--button-background-color-danger);
+    color: var(--button-text-color-danger);
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(0, 0, 0, 0.12) 0px 1px 1px 0px,
+                var(--button-box-shadow-color-danger) 0px 0px 0px 1px,
+                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                #00000026 0px 2px 5px 0px;
+    &:focus {
+      box-shadow: 0 0 0 3px var(--button-box-shadow-color-danger-focus);
+    }
+  }
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    background-color: var(--button-background-color-disabled);
+    color: var(--button-text-color-disabled);
+    box-shadow: none;
+    &:active {
+      box-shadow: none !important;
+    }
+  }
+
+  &--narrow,
+  &--small {
+    width: auto;
+    white-space: pre;
+    min-height: initial;
+    display: inline-block;
+    margin: 0;
+    line-height: 0;
+  }
+  &--small {
+    height: 22px;
+    font-size: 13px;
+    padding: 11px !important;
+  }
+
+  &--narrow {
+    font-size: small;
+    padding: 12px 10px !important;
+  }
+
+  &--wide {
+    width: calc(100% - 4px);
+    padding: 8px 12px;
+    white-space: pre;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .btn {
+    padding: 7px 15px;
+  }
+}

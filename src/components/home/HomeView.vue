@@ -1,7 +1,10 @@
 <template>
-  <main>
-    <h1>home here</h1>
+  <main class="main main--home">
+    <HomeHero />
+    <p>more stuff here</p>
   </main>
 </template>
 
-<script setup></script>
+<script setup>
+import HomeHero from '@/components/home/components/HomeHero.vue';
+</script>
