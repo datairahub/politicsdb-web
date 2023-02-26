@@ -14,6 +14,7 @@ module.exports = {
   },
   rules: {
     'import/no-unresolved': 'error',
+    'import/prefer-default-export': 'off',
   },
   settings: {
     'import/resolver': {
