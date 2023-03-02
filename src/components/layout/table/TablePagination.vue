@@ -3,14 +3,14 @@
     <td colspan="1000">
       <div class="table-pagination table__pagination">
         <div class="table-pagination__total">
-          {{ total }} resultados
+          {{ pagination.total }} resultados
         </div>
-        <div v-if="pages > 1" class="table-pagination__pages">
+        <div v-if="pagination.pages > 1" class="table-pagination__pages">
           <div
-            class="table-pagination__page-btn"
+            class="table-pagination__page-btn table-pagination__page-btn--next"
             :class="{ disabled: page === 1 }"
-            @click="$emit('page-diff', -1)"
-            @keyup="$emit('page-diff', -1)"
+            @click="$emit('update:page', page - 1)"
+            @keyup="$emit('update:page', page - 1)"
           >
             ⬅
           </div>
@@ -19,21 +19,20 @@
             :key="number"
             class="table-pagination__page-btn"
             :class="{ current: number === page, step: i > 1 && number - pageButtons[i - 1] > 1 }"
-            @click="$emit('page-set', number)"
-            @keyup="$emit('page-set', number)"
+            @click="$emit('update:page', number)"
+            @keyup="$emit('update:page', number)"
           >
             {{ number }}
           </div>
           <div
-            class="table-pagination__page-btn"
-            :class="{ disabled: page === pages }"
-            @click="$emit('page-diff', 1)"
-            @keyup="$emit('page-diff', 1)"
+            class="table-pagination__page-btn table-pagination__page-btn--next"
+            :class="{ disabled: page === pagination.pages }"
+            @click="$emit('update:page', page + 1)"
+            @keyup="$emit('update:page', page + 1)"
           >
             ➡
           </div>
         </div>
-        <div class="table-pagination__buttons" />
       </div>
     </td>
   </tr>
@@ -42,42 +41,33 @@
 <script setup>
 import { computed } from 'vue';
 
-defineEmits(['page-set', 'page-diff']);
-
+defineEmits(['update:page']);
 const props = defineProps({
-  total: {
-    type: Number,
-    required: false,
-    default: 0,
+  pagination: {
+    type: Object,
+    required: true,
+    default: () => ({
+      total: 0,
+      pageSize: 0,
+      pages: 0,
+    }),
   },
   page: {
     type: Number,
-    required: false,
-    default: 0,
-  },
-  pageSize: {
-    type: Number,
-    required: false,
-    default: 0,
-  },
-  pages: {
-    type: Number,
-    required: false,
-    default: 0,
+    required: true,
+    default: 1,
   },
 });
 
 const pageButtons = computed(() => {
-  if (props.pages <= 1) return [];
-  if (props.pages > 10) {
+  if (props.pagination.pages <= 1) return [];
+  if (props.pagination.pages > 10) {
     const len = 5;
     return Array.from({ length: len }, (_, i) => i + 1)
-      .concat(Array.from({ length: len }, (_, i) => (props.pages - len + 1) + i));
+      .concat(Array.from({ length: len }, (_, i) => (props.pagination.pages - len + 1) + i));
   }
-
-  return Array.from({ length: props.pages }, (_, i) => i + 1);
+  return Array.from({ length: props.pagination.pages }, (_, i) => i + 1);
 });
-
 </script>
 
 <style lang="scss">
@@ -89,17 +79,20 @@ $page-button-size: 20px;
   width: 100%;
   &__total {
     text-align: left;
-    flex: 0 0 160px;
+    flex: 0 0 120px;
+    line-height: $page-button-size;
+    padding: 2px;
   }
   &__pages {
     text-align: center;
     flex: 1 0 auto;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 5px;
     align-items: center;
   }
   &__page-btn {
+    display: none;
     background: var(--background-color-dark);
     color: var(--text-color-lighter);
     cursor: pointer;
@@ -134,10 +127,20 @@ $page-button-size: 20px;
         pointer-events: none;
       }
     }
+    &--next {
+      display: block;
+    }
   }
-  &__buttons {
-    text-align: right;
-    flex: 0 0 160px;
+}
+
+@media screen and (min-width: 568px) {
+  .table-pagination {
+    &__pages {
+      justify-content: center;
+    }
+    &__page-btn {
+      display: block;
+    }
   }
 }
 </style>

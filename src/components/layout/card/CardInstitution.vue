@@ -31,9 +31,6 @@ const props = defineProps({
   },
 });
 
-// const state = reactive({
-//   imageSrc: '',
-// });
 const imageSrc = computed(() => (props.institution
   ? `${import.meta.env.VITE_STATIC_URL}images/adm0/${props.institution.adm0}.png`
   : ''));

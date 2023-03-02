@@ -13,7 +13,8 @@
     th {
       text-align: left;
       border: 0;
-      padding: 12px 5px 12px;
+      padding: 10px 5px 10px;
+      line-height: 1.2;
       &:first-child {
         padding-left: $table-lateral-padding;
       }
@@ -44,4 +45,9 @@
     }
   }
 
+  &__filters {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+  }
 }

@@ -19,7 +19,7 @@
 import { ref } from 'vue';
 import { useApiStore } from '@/stores/api';
 import { useRoute } from 'vue-router';
-import TablePersons from '@/components/layout/table/TablePersons.vue';
+import TablePersons from '@/components/layout/table/persons/TablePersons.vue';
 
 const route = useRoute();
 const period = ref({});

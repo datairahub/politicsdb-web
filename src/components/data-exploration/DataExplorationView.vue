@@ -11,6 +11,8 @@
         :institution="institution"
       />
     </CardListWrapper>
+
+    <TablePersons />
   </main>
 </template>
 
@@ -19,6 +21,7 @@ import { ref } from 'vue';
 import { useApiStore } from '@/stores/api';
 import CardListWrapper from '@/components/layout/card/CardListWrapper.vue';
 import CardInstitution from '@/components/layout/card/CardInstitution.vue';
+import TablePersons from '@/components/layout/table/persons/TablePersons.vue';
 
 const institutions = ref([]);
 const api = useApiStore();

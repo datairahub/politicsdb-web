@@ -18,8 +18,8 @@
 import { ref } from 'vue';
 import { useApiStore } from '@/stores/api';
 import { useRoute } from 'vue-router';
-import TablePeriods from '@/components/layout/table/TablePeriods.vue';
-import TablePersons from '@/components/layout/table/TablePersons.vue';
+import TablePeriods from '@/components/layout/table/periods/TablePeriods.vue';
+import TablePersons from '@/components/layout/table/persons/TablePersons.vue';
 
 const route = useRoute();
 const institution = ref({});

@@ -20,6 +20,7 @@ class ApiService {
       // Positions
       case 'institution':           return `${base}${api}position/institution/${id}`;
       case 'period':                return `${base}${api}position/period/${id}`;
+      case 'position':              return `${base}${api}position/position/${id}`;
 
       // Persons
       case 'person':                return `${base}${api}people/person/${id}`;
