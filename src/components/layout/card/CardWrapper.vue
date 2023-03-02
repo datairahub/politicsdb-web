@@ -1,0 +1,61 @@
+<template>
+  <div class="card">
+    <div v-if="$slots.header" class="card__header">
+      <slot name="header" />
+    </div>
+    <div v-if="$slots.default" class="card__body">
+      <slot />
+    </div>
+    <div v-if="$slots.footer" class="card__footer">
+      <slot name="footer" />
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.card {
+  -webkit-box-shadow: 0 7px 14px 0 rgb(60 66 87 / 10%), 0 3px 6px 0 rgb(0 0 0 / 7%);
+  box-shadow: 0 7px 14px 0 rgb(60 66 87 / 10%), 0 3px 6px 0 rgb(0 0 0 / 7%);
+  border-radius: 4px;
+  overflow: hidden;
+  &__header {
+    padding: 10px;
+    a {
+      color: var(--text-color-default);
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+    img {
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 7px;
+    }
+    h3 {
+      display: inline-block;
+      margin-top: 0;
+    }
+  }
+  &__body {
+    padding: 10px;
+  }
+  &__footer {
+    padding: 10px;
+    background: var(--background-color-light);
+    line-height: 1;
+    display: flex;
+    gap: 10px;
+    a {
+      color: var(--text-color-default);
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  &__flag {
+    height: 14px;
+    width: auto;
+    margin-right: 4px;
+  }
+}
+</style>

@@ -4,18 +4,21 @@
 
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     <h2>Instituciones</h2>
-    <div v-for="institution in institutions" :key="institution.id">
-      <router-link :to="{ name: 'institution', params: { institutionid: institution.id } }">
-        {{ institution.name }}
-      </router-link>
-    </div>
-    {{ api.name }}
+    <CardListWrapper>
+      <CardInstitution
+        v-for="institution in institutions"
+        :key="institution.id"
+        :institution="institution"
+      />
+    </CardListWrapper>
   </main>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useApiStore } from '@/stores/api';
+import CardListWrapper from '@/components/layout/card/CardListWrapper.vue';
+import CardInstitution from '@/components/layout/card/CardInstitution.vue';
 
 const institutions = ref([]);
 const api = useApiStore();

@@ -1,0 +1,47 @@
+/* TABLES
+*****************************************/
+
+.table {
+  $table-lateral-padding: 10px;
+
+  border-collapse: separate;
+  border-spacing: 0;
+  border-width: 1px 0 0 1px;
+  width: 100%;
+
+  thead {
+    th {
+      text-align: left;
+      border: 0;
+      padding: 12px 5px 12px;
+      &:first-child {
+        padding-left: $table-lateral-padding;
+      }
+    }
+  }
+  
+  tbody {
+    tr {
+      &:nth-child(2n) {
+        background: var(--background-color-light);
+      }
+      td {
+        padding: 5px 5px 5px;
+        &:first-child {
+          padding-left: $table-lateral-padding;
+        }
+      }
+    }
+  }
+
+  tfoot {
+    td {
+      font-size: 14px;
+      padding: 10px 5px 5px;
+      &:first-child {
+        padding-left: $table-lateral-padding;
+      }
+    }
+  }
+
+}

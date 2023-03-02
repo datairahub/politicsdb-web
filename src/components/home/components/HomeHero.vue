@@ -8,7 +8,7 @@
       quisquam quam nostrum facilis excepturi rerum
     </p>
     <div class="hero__actions">
-      <router-link :to="{ name: 'data' }">
+      <router-link :to="{ name: 'explore' }">
         <button type="button" class="btn btn--primary">
           Explorar datos
         </button>

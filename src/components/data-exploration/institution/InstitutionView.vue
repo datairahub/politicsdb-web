@@ -1,6 +1,16 @@
 <template>
   <main class="main main--data">
     <h1>{{ institution.name }}</h1>
+
+    <TablePeriods
+      v-if="institution.id"
+      :filters="{ institution: institution.id }"
+    />
+
+    <TablePersons
+      v-if="institution.id"
+      :filters="{ institution: institution.id }"
+    />
   </main>
 </template>
 
@@ -8,6 +18,8 @@
 import { ref } from 'vue';
 import { useApiStore } from '@/stores/api';
 import { useRoute } from 'vue-router';
+import TablePeriods from '@/components/layout/table/TablePeriods.vue';
+import TablePersons from '@/components/layout/table/TablePersons.vue';
 
 const route = useRoute();
 const institution = ref({});

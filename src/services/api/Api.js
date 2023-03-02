@@ -2,7 +2,7 @@
  * API Service class
  * Handles communication between app and API
  */
-class ApiService { // eslint-disable-line
+class ApiService {
   /**
    * Get endpoint URL
    * @param {string} endpoint endpoint name
@@ -18,7 +18,11 @@ class ApiService { // eslint-disable-line
       /* eslint-disable no-multi-spaces */
 
       // Positions
-      case 'institution':                return `${base}${api}position/institution/${id}`;
+      case 'institution':           return `${base}${api}position/institution/${id}`;
+      case 'period':                return `${base}${api}position/period/${id}`;
+
+      // Persons
+      case 'person':                return `${base}${api}people/person/${id}`;
 
       default: break;
       /* eslint-enable no-multi-spaces */

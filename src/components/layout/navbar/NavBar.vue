@@ -8,7 +8,7 @@
     <nav class="navbar__links">
       <ul>
         <li>
-          <router-link :to="{ name: 'data' }">
+          <router-link :to="{ name: 'explore' }">
             Datos
           </router-link>
         </li>
@@ -76,7 +76,8 @@ import LogoBase from '@/components/layout/logo/LogoBase.vue';
 
 @media screen and (min-width: 920px) {
   .navbar {
-    width: 900px;
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
   }
 }
