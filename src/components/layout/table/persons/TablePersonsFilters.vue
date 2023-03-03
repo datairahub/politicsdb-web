@@ -2,6 +2,7 @@
   <div class="table__filters table__filters--person table-persons-filters">
     <el-input
       v-model="state.search"
+      clearable
       class="table-persons-filters__search"
       placeholder="Buscar"
     />

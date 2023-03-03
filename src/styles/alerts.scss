@@ -1,0 +1,12 @@
+.el-alert {
+  font-size: 13px;
+  .el-alert__description {
+    font-size: 13px;
+    margin-top: 0;
+    > p {
+      margin-top: 0;
+      margin-bottom: 0;
+      line-height: 1.5;
+    }
+  }
+}

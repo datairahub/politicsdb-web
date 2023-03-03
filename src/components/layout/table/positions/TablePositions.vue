@@ -2,7 +2,7 @@
   <div class="table-positions">
     <h2>Cargos</h2>
 
-    <TableWrapper>
+    <TableWrapper v-if="state.items.length">
       <template #thead>
         <tr>
           <th>Nombre</th>
@@ -30,6 +30,10 @@
         />
       </template>
     </TableWrapper>
+
+    <div v-if="!state.isLoading && state.items.length === 0" class="table__empty">
+      <el-alert title="Sin datos" type="info" :closable="false"/>
+    </div>
   </div>
 </template>
 
