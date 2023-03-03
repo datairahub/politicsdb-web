@@ -24,7 +24,7 @@
     </div>
 
     <div v-if="!state.isLoading && state.items.length === 0" class="biographysources__empty">
-      <el-alert title="Sin datos" type="info" :closable="false"/>
+      <el-alert title="Sin datos" type="info" :closable="false" />
     </div>
   </div>
 </template>
