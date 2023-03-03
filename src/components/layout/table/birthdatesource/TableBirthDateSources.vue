@@ -1,25 +1,27 @@
 <template>
-  <div class="table-positions">
-    <h2>Cargos</h2>
+  <div class="table-birthdatesources">
+    <h2>Fechas nacimiento</h2>
 
     <TableWrapper>
       <template #thead>
         <tr>
-          <th>Nombre</th>
-          <th>Inicio</th>
-          <th>Fin</th>
+          <th>Fuente</th>
+          <th>Fecha</th>
+          <th>Enlace</th>
         </tr>
       </template>
       <template #tbody>
         <tr v-for="item in state.items" :key="item.id">
           <td>
-            {{ item.full_name }}
+            {{ item.name }}
           </td>
           <td>
-            {{ item.start }}
+            {{ item.date }}{{ item.is_exact ? '' : '*' }}
           </td>
-          <td>
-            {{ item.end }}
+          <td style="max-width: 100px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+            <a :href="item.url" :title="item.url" target="_blank" rel="noopener noreferrer">
+              {{ item.url }}
+            </a>
           </td>
         </tr>
       </template>
@@ -66,9 +68,9 @@ const getTableData = () => {
   const params = {
     ...props.filters,
     page: state.page,
-    ordering: '-start',
+    ordering: 'name',
   };
-  api.list('position', params)
+  api.list('birthdatesource', params)
     .then((data) => {
       state.pagination.total = data.count;
       state.pagination.pageSize = data.page_size;

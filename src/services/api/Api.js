@@ -24,6 +24,8 @@ class ApiService {
 
       // Persons
       case 'person':                return `${base}${api}people/person/${id}`;
+      case 'birthdatesource':       return `${base}${api}people/birthdatesource/${id}`;
+      case 'biographysource':       return `${base}${api}people/biographysource/${id}`;
 
       default: break;
       /* eslint-enable no-multi-spaces */

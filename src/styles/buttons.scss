@@ -1,16 +1,11 @@
 /* BUTTONS
 *****************************************/
-.btn {
-  font-weight: 500;
-  min-height: 28px;
-  cursor: pointer;
-  border: 0;
-  border-radius: 4px;
-  padding: 4px 11px 5px;
-  margin: 2px;
+.el-button {
   transition: box-shadow 250ms ease, border-color 250ms ease;
   background-color: var(--button-background-color-default);
   color: var(--button-text-color-default);
+  font-weight: 500;
+  font-family: var(--font-family-default);
   box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
               rgba(0, 0, 0, 0) 0px 0px 0px 0px,
               rgba(0, 0, 0, 0.12) 0px 1px 1px 0px,
@@ -18,29 +13,57 @@
               rgba(0, 0, 0, 0) 0px 0px 0px 0px,
               rgba(0, 0, 0, 0) 0px 0px 0px 0px,
               #00000026 0px 2px 5px 0px;
-  &:focus {
-    outline: 0;
-    box-shadow: 0 0 0 3px var(--button-box-shadow-color-focus);
-  }
+      
+  
+  &.is-active,
   &:active {
     outline: 0;
+    background-color: var(--button-background-color-focus);
+    color: var(--button-text-color-focus);
+    border-color: var(--button-box-shadow-color-focus);
     box-shadow: 0 0 0 1px #d8d8d880 !important;
+  }
+  
+  &:focus,
+  &.is-focus,
+  &:hover,
+  &.is-hover {
+    background-color: var(--button-background-color-focus);
+    color: var(--button-text-color-focus);
+    border-color: var(--button-box-shadow-color-focus);
+    box-shadow: 0 0 0 2px var(--button-box-shadow-color-focus);
   }
 
   &--primary {
     background-color: var(--button-background-color-accent);
     color: var(--button-text-color-accent);
-    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-                rgba(0, 0, 0, 0.12) 0px 1px 1px 0px,
-                var(--button-box-shadow-color-accent) 0px 0px 0px 1px,
-                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-                #00000026 0px 2px 5px 0px;
+    border-color: var(--button-box-shadow-color-accent);
+    // box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    //             rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    //             rgba(0, 0, 0, 0.12) 0px 1px 1px 0px,
+    //             var(--button-box-shadow-color-accent) 0px 0px 0px 1px,
+    //             rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    //             rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    //             #00000026 0px 2px 5px 0px;
+
+    &.is-active,
+    &:active,
+    &.is-hover,
+    &:hover,
+    &.is-focus,
+    &:focus {
+      background-color: var(--button-background-color-accent-focus);
+      color: var(--button-text-color-accent-focus);
+      border-color: var(--button-box-shadow-color-accent-focus);
+      box-shadow: 0 0 0 3px var(--button-box-shadow-color-accent-focus);
+    }
+    
   }
+
   &--danger {
     background-color: var(--button-background-color-danger);
     color: var(--button-text-color-danger);
+    border-color: var(--button-box-shadow-color-danger);
     box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
                 rgba(0, 0, 0, 0) 0px 0px 0px 0px,
                 rgba(0, 0, 0, 0.12) 0px 1px 1px 0px,
@@ -48,50 +71,28 @@
                 rgba(0, 0, 0, 0) 0px 0px 0px 0px,
                 rgba(0, 0, 0, 0) 0px 0px 0px 0px,
                 #00000026 0px 2px 5px 0px;
+
+    &.is-active,
+    &:active,
+    &.is-hover,
+    &:hover,
+    &.is-focus,
     &:focus {
+      background-color: var(--button-background-color-danger-focus);
+      color: var(--button-text-color-danger-focus);
+      border-color: var(--button-box-shadow-color-danger-focus);
       box-shadow: 0 0 0 3px var(--button-box-shadow-color-danger-focus);
     }
   }
-  &:disabled {
+
+  &.is-disabled {
+    color: var(--button-text-color-disabled) !important;
+    border-color: var(--button-border-color-disabled) !important;
+    background-color: var(--button-background-color-disabled) !important;
+    box-shadow: none !important;
     opacity: 0.5;
-    pointer-events: none;
-    background-color: var(--button-background-color-disabled);
-    color: var(--button-text-color-disabled);
-    box-shadow: none;
     &:active {
       box-shadow: none !important;
     }
-  }
-
-  &--narrow,
-  &--small {
-    width: auto;
-    white-space: pre;
-    min-height: initial;
-    display: inline-block;
-    margin: 0;
-    line-height: 0;
-  }
-  &--small {
-    height: 22px;
-    font-size: 13px;
-    padding: 11px !important;
-  }
-
-  &--narrow {
-    font-size: small;
-    padding: 12px 10px !important;
-  }
-
-  &--wide {
-    width: calc(100% - 4px);
-    padding: 8px 12px;
-    white-space: pre;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .btn {
-    padding: 7px 15px;
   }
 }

@@ -35,7 +35,7 @@ const state = reactive({
       return props.filters.search;
     },
     set(val) {
-      emit('update:filters', { ...props.filters, search: val.trim() });
+      emit('update:filters', { ...props.filters, search: val });
     },
   }),
   genre: computed({
@@ -43,7 +43,7 @@ const state = reactive({
       return props.filters.genre;
     },
     set(val) {
-      emit('update:filters', { ...props.filters, genre: val.trim() });
+      emit('update:filters', { ...props.filters, genre: val });
     },
   }),
 });

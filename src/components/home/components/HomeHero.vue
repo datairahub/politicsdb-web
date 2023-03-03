@@ -9,13 +9,13 @@
     </p>
     <div class="hero__actions">
       <router-link :to="{ name: 'explore' }">
-        <button type="button" class="btn btn--primary">
+        <el-button type="primary">
           Explorar datos
-        </button>
+        </el-button>
       </router-link>
-      <button type="button" class="btn btn--primary">
+      <el-button type="primary">
         Descargar datos
-      </button>
+      </el-button>
     </div>
   </div>
 </template>
