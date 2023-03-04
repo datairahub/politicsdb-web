@@ -8,7 +8,7 @@
     <nav class="navbar__links">
       <ul>
         <li>
-          <router-link :to="{ name: 'explore' }">
+          <router-link :to="{ name: 'data' }">
             Datos
           </router-link>
         </li>

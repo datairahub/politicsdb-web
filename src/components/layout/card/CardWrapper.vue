@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" :class="classes">
     <div v-if="$slots.header" class="card__header">
       <slot name="header" />
     </div>
@@ -12,6 +12,16 @@
   </div>
 </template>
 
+<script setup>
+defineProps({
+  classes: {
+    type: String,
+    required: false,
+    default: '',
+  },
+});
+</script>
+
 <style lang="scss">
 .card {
   -webkit-box-shadow: 0 7px 14px 0 rgb(60 66 87 / 10%), 0 3px 6px 0 rgb(0 0 0 / 7%);
@@ -23,7 +33,7 @@
     a {
       color: var(--text-color-default);
       &:hover {
-        opacity: 0.6;
+        color: var(--primary-color-default);
       }
     }
     img {
@@ -45,6 +55,7 @@
     line-height: 1;
     display: flex;
     gap: 10px;
+    font-size: 12px;
     a {
       color: var(--text-color-default);
       &:hover {

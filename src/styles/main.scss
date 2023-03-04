@@ -8,6 +8,7 @@ body {
 a {
   color: var(--primary-color-strong);
   text-decoration: none;
+  transition: color 200ms ease;
 }
 
 .main {

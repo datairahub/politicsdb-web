@@ -1,7 +1,7 @@
 <template>
   <main class="main main--data">
     <el-breadcrumb>
-      <el-breadcrumb-item :to="{ name: 'explore' }">
+      <el-breadcrumb-item :to="{ name: 'data' }">
         Datos
       </el-breadcrumb-item>
       <el-breadcrumb-item :to="{ name: 'institution', params: { institutionid: period.institution } }">

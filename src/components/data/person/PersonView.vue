@@ -34,7 +34,7 @@ import { useApiStore } from '@/stores/api';
 import { useRoute } from 'vue-router';
 import TablePositions from '@/components/layout/table/positions/TablePositions.vue';
 import TableBirthDateSources from '@/components/layout/table/birthdatesource/TableBirthDateSources.vue';
-import PersonBiographies from '@/components/data-exploration/person/PersonBiographies.vue';
+import PersonBiographies from '@/components/data/person/PersonBiographies.vue';
 
 const route = useRoute();
 const person = ref({});

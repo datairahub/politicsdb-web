@@ -1,6 +1,18 @@
 <template>
   <main class="main main--data">
-    <h1>{{ state.instance.name }}</h1>
+    <el-breadcrumb>
+      <el-breadcrumb-item :to="{ name: 'data' }">
+        Datos
+      </el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ name: 'institution', params: { institutionid: state.institution.id } }">
+        {{ state.institution.name }}
+      </el-breadcrumb-item>
+      <el-breadcrumb-item>{{ state.info.name }}</el-breadcrumb-item>
+    </el-breadcrumb>
+
+    <h1>{{ state.info.name }}</h1>
+    <p>{{ state.info.desc }}</p>
+    <p>{{ state.info.body }}</p>
     <div ref="chart" style="height: 600px" />
   </main>
 </template>
@@ -10,6 +22,8 @@ import { ref, reactive, onMounted } from 'vue';
 import { useApiStore } from '@/stores/api';
 import { useRoute, useRouter } from 'vue-router';
 import { timeFormat } from 'd3-time-format';
+import Charts from '@/services/charts/Charts';
+import Parser from '@/services/parser/Parser';
 import LinesChart from '@/components/charts/lineschart/d3.lineschart';
 import '@/components/charts/d3.chart.scss';
 
@@ -19,9 +33,10 @@ const api = useApiStore();
 const chart = ref(null);
 
 const state = reactive({
-  instance: {},
+  institution: {},
   data: [],
   chart: null,
+  info: new Charts().getChart((d) => d.id === 'age-all'),
 });
 
 const createChart = (rawData) => {
@@ -47,7 +62,7 @@ const createChart = (rawData) => {
       xFormat: timeFormat('%Y'),
       yFormat: (d) => new Date(d).getUTCFullYear() - 1970,
     },
-    tooltip: (event, d) => d.name,
+    tooltip: (event, d) => `${d.name}: ${Parser.round(d.y1 / (1000 * 60 * 60 * 24 * 365.25), 1)} años`,
     click: (event, d) => {
       router.push({ name: 'person', params: { personid: d.id } });
     },
@@ -59,7 +74,7 @@ const createChart = (rawData) => {
 onMounted(() => {
   api.retrieve('institution-age', route.params.institutionid)
     .then((data) => {
-      state.instance = data.instance;
+      state.institution = data.instance;
       createChart(data.positions);
     });
 });

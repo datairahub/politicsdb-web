@@ -1,9 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/components/home/HomeView.vue';
 import main from '@/router/main';
-import dataExplore from '@/router/dataExplore';
-import dataAnalysis from '@/router/dataAnalysis';
-import dataDownload from '@/router/dataDownload';
+import data from '@/router/data';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,9 +12,7 @@ const router = createRouter({
       component: HomeView,
     },
     ...main,
-    ...dataExplore,
-    ...dataAnalysis,
-    ...dataDownload,
+    ...data,
   ],
 });
 

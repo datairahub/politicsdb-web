@@ -3,6 +3,7 @@
     <h1>Explorar datos</h1>
 
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
     <h2>Instituciones</h2>
     <CardListWrapper>
       <CardInstitution
