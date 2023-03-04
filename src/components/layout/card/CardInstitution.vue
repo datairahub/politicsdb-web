@@ -3,7 +3,7 @@
     <template #header>
       <router-link :to="{ name: 'institution', params: { institutionid: institution.id } }">
         <img
-          :src="imageSrc"
+          :src="imageSrc(institution)"
           :alt="`Bandera de ${institution.name}`"
           class="card__flag"
         >
@@ -20,10 +20,9 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
 import CardWrapper from './CardWrapper.vue';
 
-const props = defineProps({
+defineProps({
   institution: {
     type: Object,
     required: true,
@@ -31,7 +30,7 @@ const props = defineProps({
   },
 });
 
-const imageSrc = computed(() => (props.institution
-  ? `${import.meta.env.VITE_STATIC_URL}images/adm0/${props.institution.adm0}.png`
-  : ''));
+const imageSrc = (institution) => (institution && institution.id
+  ? `${import.meta.env.VITE_STATIC_URL}images/adm0/${institution.adm0}.png`
+  : '');
 </script>

@@ -1,5 +1,12 @@
 <template>
   <main class="main main--data">
+    <el-breadcrumb>
+      <el-breadcrumb-item :to="{ name: 'explore' }">
+        Datos
+      </el-breadcrumb-item>
+      <el-breadcrumb-item>{{ institution.name }}</el-breadcrumb-item>
+    </el-breadcrumb>
+
     <h1>{{ institution.name }}</h1>
 
     <TablePeriods

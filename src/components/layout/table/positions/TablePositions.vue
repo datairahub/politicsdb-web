@@ -13,7 +13,9 @@
       <template #tbody>
         <tr v-for="item in state.items" :key="item.id">
           <td>
-            {{ item.full_name }}
+            <router-link :to="{ name: 'period', params: { periodid: item.period } }">
+              {{ item.full_name }}
+            </router-link>
           </td>
           <td>
             {{ item.start }}

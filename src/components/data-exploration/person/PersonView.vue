@@ -3,6 +3,8 @@
     <h1>{{ person.full_name }}</h1>
 
     <div>
+      <p><strong>ID: </strong> {{ person.id }}</p>
+      <p><strong>Nombre único: </strong> {{ person.id_name }}</p>
       <p><strong>Nombre: </strong> {{ person.first_name }}</p>
       <p><strong>Apellidos: </strong> {{ person.last_name }}</p>
       <p><strong>Fecha de nacimiento: </strong> {{ person.birth_date }}</p>

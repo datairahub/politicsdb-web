@@ -10,12 +10,19 @@
     <div class="hero__actions">
       <router-link :to="{ name: 'explore' }">
         <el-button type="primary">
-          Explorar datos
+          Explorar
         </el-button>
       </router-link>
-      <el-button type="primary">
-        Descargar datos
-      </el-button>
+      <router-link :to="{ name: 'analysis' }">
+        <el-button type="primary">
+          Analizar
+        </el-button>
+      </router-link>
+      <router-link :to="{ name: 'download' }">
+        <el-button type="primary">
+          Descargar
+        </el-button>
+      </router-link>
     </div>
   </div>
 </template>

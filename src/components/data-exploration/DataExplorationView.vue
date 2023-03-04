@@ -1,6 +1,6 @@
 <template>
   <main class="main main--data">
-    <h1>Datos</h1>
+    <h1>Explorar datos</h1>
 
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     <h2>Instituciones</h2>
@@ -12,7 +12,9 @@
       />
     </CardListWrapper>
 
-    <TablePersons />
+    <TablePersons
+      :filters="{ page_size: 5 }"
+    />
   </main>
 </template>
 
