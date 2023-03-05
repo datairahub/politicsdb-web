@@ -16,7 +16,9 @@
 
     <div class="chart-controls">
       <div class="chart-controls__block">
-        <div class="chart-controls__label">Ver por</div>
+        <div class="chart-controls__label">
+          Ver por
+        </div>
         <div class="chart-controls__input">
           <el-select
             v-model="state.mode"
@@ -34,7 +36,9 @@
         </div>
       </div>
       <div class="chart-controls__block">
-        <div class="chart-controls__label">Filtrar por</div>
+        <div class="chart-controls__label">
+          Filtrar por
+        </div>
         <div class="chart-controls__input">
           <el-select
             v-model="state.filters.genre"
@@ -59,9 +63,6 @@
           </el-select>
         </div>
       </div>
-
-
-
     </div>
 
     <div ref="chart" style="height: calc(100vh - 360px)" />
@@ -71,7 +72,9 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, watch } from 'vue';
+import {
+  ref, reactive, onMounted, watch,
+} from 'vue';
 import { useApiStore } from '@/stores/api';
 import { useRoute, useRouter } from 'vue-router';
 import { timeFormat } from 'd3-time-format';
@@ -167,7 +170,7 @@ const getData = (params = {}) => {
       state.institution = data.instance;
       updateChart(data.positions);
     });
-}
+};
 
 onMounted(() => {
   getData(state.filters);
