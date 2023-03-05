@@ -108,7 +108,7 @@ export default class extends d3chart {
    * Set up scales
    */
   setScales() {
-    const flatData = this.data.flatMap(d => d.values);
+    const flatData = this.data.flatMap((d) => d.values);
     const yMin = this.cfg.scales.yMinOverride === null
       ? d3.min(flatData, (d) => d.y)
       : this.cfg.scales.yMinOverride;
@@ -121,7 +121,7 @@ export default class extends d3chart {
     const xMax = this.cfg.scales.xMaxOverride === null
       ? d3.max(flatData, (d) => d.x)
       : this.cfg.scales.xMaxOverride;
-    
+
     // Calcule vertical scale
     this.yScale
       .domain([yMin, yMax])

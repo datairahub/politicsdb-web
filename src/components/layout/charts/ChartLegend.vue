@@ -3,7 +3,7 @@
     <div v-for="(legend, i) in legends" :key="i">
       <span
         class="chart-legend-dot"
-        :style="{backgroundColor: legend.color}"
+        :style="{ backgroundColor: legend.color }"
       />
       <span class="chart-legend-label">
         {{ legend.label }}

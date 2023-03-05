@@ -12,34 +12,66 @@
       </el-breadcrumb-item>
     </el-breadcrumb>
 
-    <ChartInfo :info="state.chartInfo"/>
+    <ChartInfo :info="state.chartInfo" />
 
-    <div class="chart-view__controls">
-      <el-select
-        v-model="state.mode"
-        class=""
-        placeholder="Ver por"
-        @change="setMode">
-        <el-option
-          key="1"
-          label="Todos"
-          value="all"/>
-        <el-option
-          key="2"
-          label="Por género"
-          value="genre"/>
-      </el-select>
+    <div class="chart-controls">
+      <div class="chart-controls__block">
+        <div class="chart-controls__label">Ver por</div>
+        <div class="chart-controls__input">
+          <el-select
+            v-model="state.mode"
+            class=""
+            placeholder="Ver por"
+            @change="setMode"
+          >
+            <el-option
+              v-for="option in state.options"
+              :key="option.value"
+              :label="option.label"
+              :value="option.value"
+            />
+          </el-select>
+        </div>
+      </div>
+      <div class="chart-controls__block">
+        <div class="chart-controls__label">Filtrar por</div>
+        <div class="chart-controls__input">
+          <el-select
+            v-model="state.filters.genre"
+            class=""
+            placeholder="Género"
+          >
+            <el-option
+              key="T"
+              label="Todos los géneros"
+              value=""
+            />
+            <el-option
+              key="M"
+              label="Hombres"
+              value="M"
+            />
+            <el-option
+              key="F"
+              label="Mujeres"
+              value="F"
+            />
+          </el-select>
+        </div>
+      </div>
+
+
+
     </div>
 
-    <div ref="chart" style="height: calc(100vh - 360px)"/>
+    <div ref="chart" style="height: calc(100vh - 360px)" />
 
-    <ChartLegend :legends="state.chartLegends[state.mode]"/>
-
+    <ChartLegend :legends="state.chartLegends[state.mode]" />
   </main>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, watch } from 'vue';
 import { useApiStore } from '@/stores/api';
 import { useRoute, useRouter } from 'vue-router';
 import { timeFormat } from 'd3-time-format';
@@ -60,6 +92,13 @@ const state = reactive({
   data: [],
   chart: null,
   mode: 'all',
+  options: [
+    { label: 'Sin distinción', value: 'all' },
+    { label: 'Por género', value: 'genre' },
+  ],
+  filters: {
+    genre: '',
+  },
   chartData: [],
   chartInfo: new Charts().getChart((d) => d.id === 'age-all'),
   chartConfig: {
@@ -88,11 +127,11 @@ const state = reactive({
   },
   chartLegends: {
     all: [],
-    genre: [{ color: 'steelblue', label: 'Hombre'}, { color: 'purple', label: 'Mujer'}],
-  }
+    genre: [{ color: 'steelblue', label: 'Hombre' }, { color: 'purple', label: 'Mujer' }],
+  },
 });
 
-const createChart = (rawData) => {
+const updateChart = (rawData) => {
   state.chartData = rawData.map((d) => ({
     id: d.id,
     name: d.full_name,
@@ -108,7 +147,11 @@ const createChart = (rawData) => {
       },
     ],
   }));
-  state.chart = new LinesChart(chart.value, state.chartData, state.chartConfig);
+  if (!state.chart) {
+    state.chart = new LinesChart(chart.value, state.chartData, state.chartConfig);
+  } else {
+    state.chart.updateData(state.chartData);
+  }
 };
 
 const setMode = (value) => {
@@ -116,13 +159,21 @@ const setMode = (value) => {
     state.chartConfig[key] = state.chartModes[value][key];
   });
   state.chart.updateConfig(state.chartConfig);
+};
+
+const getData = (params = {}) => {
+  api.retrieve('institution-age', route.params.institutionid, params)
+    .then((data) => {
+      state.institution = data.instance;
+      updateChart(data.positions);
+    });
 }
 
 onMounted(() => {
-  api.retrieve('institution-age', route.params.institutionid)
-    .then((data) => {
-      state.institution = data.instance;
-      createChart(data.positions);
-    });
+  getData(state.filters);
+});
+
+watch(state.filters, (filters) => {
+  getData(filters);
 });
 </script>

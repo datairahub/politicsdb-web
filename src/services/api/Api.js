@@ -28,7 +28,7 @@ class ApiService {
       case 'biographysource':       return `${base}${api}people/biographysource/${id}`;
 
       // Stats
-      case 'institution-age':       return `${base}${api}position/institution/${id}/stats_age/`;
+      case 'institution-age':       return `${base}${api}position/institution/${id}stats_age/`;
 
       default: break;
       /* eslint-enable no-multi-spaces */

@@ -17,9 +17,12 @@ export const useApiStore = defineStore('api', {
      * @param {object} param1: object containing model (API.js) and instance id
      * @returns Request promise
      */
-    retrieve(endpoint, id) {
+    retrieve(endpoint, id, params) {
+      const url = params
+        ? API.url(endpoint, id) + urlService.objectToQuerystring(params)
+        : API.url(endpoint, id);
       return new Promise((resolve, reject) => {
-        Http.get(API.url(endpoint, id), API.getHeaders())
+        Http.get(url, API.getHeaders())
           .then(({ data }) => {
             resolve(data);
           })
@@ -39,10 +42,10 @@ export const useApiStore = defineStore('api', {
      * @returns Request promise
      */
     list(endpoint, params) {
+      const url = params
+        ? API.url(endpoint) + urlService.objectToQuerystring(params)
+        : API.url(endpoint);
       return new Promise((resolve, reject) => {
-        const url = params
-          ? API.url(endpoint) + urlService.objectToQuerystring(params)
-          : API.url(endpoint);
         Http.get(url, API.getHeaders())
           .then(({ data }) => {
             resolve(data);

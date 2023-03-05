@@ -192,15 +192,13 @@ export default class {
       if (this.cfg.color.scale instanceof Array) {
         // color = { key: 'party', scale: ['red', 'blue']}
         this.colorScale = d3.scaleOrdinal().range(this.cfg.color.scale);
-        return;
       } else {
         // color = { key: 'party'} (and element.party is a color)
         this.colorScale = null;
-        return;
       }
     }
   }
-  
+
   /**
    * Compute element color
    */
@@ -217,10 +215,9 @@ export default class {
       if (this.cfg.color.scale instanceof Array) {
         // color = { key: 'party', scale: ['red', 'blue']}
         return this.colorScale(d[this.cfg.color.key]);
-      } else {
-        // color = { key: 'party'} (and element.party is a color)
-        return d[this.cfg.color.key];
       }
+      // color = { key: 'party'} (and element.party is a color)
+      return d[this.cfg.color.key];
     }
     return 'black';
   }
