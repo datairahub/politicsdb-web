@@ -1,0 +1,24 @@
+/* CHARTS
+*****************************************/
+.chart-legend {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 21px;
+  margin: 0 15px;
+  font-size: 14px;
+  &-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: grey;
+    margin-right: 4px;
+  }
+}
+
+
+.chart-info {
+  margin-bottom: 10px;
+}

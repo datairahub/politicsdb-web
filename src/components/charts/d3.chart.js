@@ -30,6 +30,7 @@ export default class {
     // Set up configuration
     Object.keys(config).forEach((key) => {
       if (config[key] instanceof Object && config[key] instanceof Array === false && typeof config[key] !== 'function') {
+        if (this.cfg[key] instanceof Object === false) this.cfg[key] = {};
         Object.keys(config[key]).forEach((sk) => {
           this.cfg[key][sk] = config[key][sk];
         });
@@ -178,25 +179,49 @@ export default class {
 
   setColorScheme() {
     if (typeof this.cfg.color === 'string' || this.cfg.color instanceof String) {
+      // color = 'purple'
       this.colorScale = null;
       return;
     }
     if (this.cfg.color instanceof Array) {
+      // color = ['red', 'blue'] or schemeCategory10
       this.colorScale = d3.scaleOrdinal().range(this.cfg.color);
+      return;
+    }
+    if (this.cfg.color instanceof Object) {
+      if (this.cfg.color.scale instanceof Array) {
+        // color = { key: 'party', scale: ['red', 'blue']}
+        this.colorScale = d3.scaleOrdinal().range(this.cfg.color.scale);
+        return;
+      } else {
+        // color = { key: 'party'} (and element.party is a color)
+        this.colorScale = null;
+        return;
+      }
     }
   }
-
+  
   /**
-  * Compute element color
-  */
+   * Compute element color
+   */
   colorElement(d, key = 'id') {
     if (typeof this.cfg.color === 'string' || this.cfg.color instanceof String) {
+      // color = 'purple'
       return this.cfg.color;
     }
     if (this.cfg.color instanceof Array) {
+      // color = ['red', 'blue'] or schemeCategory10
       return this.colorScale(d[key]);
     }
-
+    if (this.cfg.color instanceof Object) {
+      if (this.cfg.color.scale instanceof Array) {
+        // color = { key: 'party', scale: ['red', 'blue']}
+        return this.colorScale(d[this.cfg.color.key]);
+      } else {
+        // color = { key: 'party'} (and element.party is a color)
+        return d[this.cfg.color.key];
+      }
+    }
     return 'black';
   }
 
@@ -226,6 +251,7 @@ export default class {
   */
   updateConfig(config) {
     this.setConfig(config);
+    this.setColorScheme();
     this.resizeChart();
   }
 

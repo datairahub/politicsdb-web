@@ -1,6 +1,6 @@
 import { select, selectAll, pointer } from 'd3-selection';
 import { scaleLinear, scaleTime } from 'd3-scale';
-import { min, max } from 'd3-array';
+import { min, max, extent } from 'd3-array';
 import { line } from 'd3-shape';
 import { axisLeft, axisBottom } from 'd3-axis';
 import d3chart from '../d3.chart';
@@ -13,6 +13,7 @@ const d3 = {
   scaleTime,
   min,
   max,
+  extent,
   line,
   axisLeft,
   axisBottom,
@@ -26,7 +27,7 @@ const d3 = {
  * @param {object} config extra configuration parameters
  *
  * Required data format = [
- *   { id: 1, x0: Date, x1: Date, y0: 256, y1: 256 },
+ *   { id: 1, values: [{x: Date, y: Number}, {x: Date, y: Number}] },
  * ]
 */
 export default class extends d3chart {
@@ -36,10 +37,16 @@ export default class extends d3chart {
       margin: {
         top: 20, right: 20, bottom: 20, left: 40,
       },
-      color: 'steelblue', // Accepts strings or arrays
+      color: 'steelblue', // Accepts strings, array or object
       attrs: {},
       styles: {},
       curve: null, // Accepts d3-line curve functions like curveLinear https://github.com/d3/d3-shape#curveLinear
+      scales: {
+        xMinOverride: null,
+        xMaxOverride: null,
+        yMinOverride: null,
+        yMaxOverride: null,
+      },
       axis: {
         yFormat: (d) => d,
         xFormat: (d) => d.getUTCFullYear(),
@@ -101,14 +108,28 @@ export default class extends d3chart {
    * Set up scales
    */
   setScales() {
+    const flatData = this.data.flatMap(d => d.values);
+    const yMin = this.cfg.scales.yMinOverride === null
+      ? d3.min(flatData, (d) => d.y)
+      : this.cfg.scales.yMinOverride;
+    const yMax = this.cfg.scales.yMaxOverride === null
+      ? d3.max(flatData, (d) => d.y)
+      : this.cfg.scales.yMaxOverride;
+    const xMin = this.cfg.scales.xMinOverride === null
+      ? d3.min(flatData, (d) => d.x)
+      : this.cfg.scales.xMinOverride;
+    const xMax = this.cfg.scales.xMaxOverride === null
+      ? d3.max(flatData, (d) => d.x)
+      : this.cfg.scales.xMaxOverride;
+    
     // Calcule vertical scale
     this.yScale
-      .domain([0, d3.max(this.data, (d) => (d.y0 > d.y1 ? d.y0 : d.y1))])
+      .domain([yMin, yMax])
       .rangeRound([this.cfg.height, 0]);
 
     // Calcule horizontal scale
     this.xScale
-      .domain([d3.min(this.data, (d) => d.x0), d3.max(this.data, (d) => d.x1)])
+      .domain([xMin, xMax])
       .rangeRound([0, this.cfg.width]);
 
     // Set up line function
@@ -162,11 +183,7 @@ export default class extends d3chart {
     linegroups
       .append('path')
       .attr('class', 'chart__line chart__line--straighlineschart')
-      .attr('stroke', (d) => this.colorElement(d, 'key'))
-      .attr('d', (d) => this.line([
-        { x: d.x0, y: 0 },
-        { x: d.x1, y: 0 },
-      ]));
+      .attr('d', (d) => this.line(d.values));
 
     Object.keys(this.cfg.attrs).forEach((key) => {
       linegroups.attr(key, this.cfg.attrs[key]);
@@ -209,10 +226,8 @@ export default class extends d3chart {
   updateElements() {
     // Redraw lines
     this.g.selectAll('.chart__line')
-      .attr('d', (d) => this.line([
-        { x: d.x0, y: d.y0 },
-        { x: d.x1, y: d.y1 },
-      ]));
+      .attr('stroke', (d) => this.colorElement(d))
+      .attr('d', (d) => this.line(d.values));
   }
 
   /**
