@@ -259,17 +259,18 @@ export default class {
     window.removeEventListener('resize', this.onResize);
   }
 
-  /**
-   * Create custom scale ticks values for a range and division
-   * @param {integer} ticks number of ticks
-   * @param {float} min minimal value
-   * @param {float} max maximal value
-   * @returns {array<integer>} scale ticks
-   */
-  calcTicksValues(ticks, min, max) {
-    const step = Math.round((max - min) / ticks);
-    return Array.from(Array(ticks + 1).keys()).map((v) => v * step);
-  }
+  // /** THIS SHIT IS NOT WORKING PROPERLY
+  //  *  TODO: FIX
+  //  * Create custom scale ticks values for a range and division
+  //  * @param {integer} ticks number of ticks
+  //  * @param {float} min minimal value
+  //  * @param {float} max maximal value
+  //  * @returns {array<integer>} scale ticks
+  //  */
+  // calcTicksValues(ticks, min, max) {
+  //   const step = Math.round((max - min) / ticks);
+  //   return Array.from(Array(ticks + 1).keys()).map((v) => v * step);
+  // }
 
   /**
    * Event listeners registration

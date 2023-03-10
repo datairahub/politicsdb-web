@@ -15,6 +15,11 @@ export default [
     component: () => import('@/components/data/institution/charts/InstitutionAgeAllView.vue'),
   },
   {
+    path: '/data/institution/:institutionid([a-fA-F0-9-]+)/age-mean/',
+    name: 'institution-age-mean',
+    component: () => import('@/components/data/institution/charts/InstitutionAgeMeanView.vue'),
+  },
+  {
     path: '/data/period/:periodid([a-fA-F0-9-]+)/',
     name: 'period',
     component: () => import('@/components/data/period/PeriodView.vue'),

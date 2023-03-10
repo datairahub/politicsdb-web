@@ -28,7 +28,8 @@ class ApiService {
       case 'biographysource':       return `${base}${api}people/biographysource/${id}`;
 
       // Stats
-      case 'institution-age':       return `${base}${api}position/institution/${id}stats_age/`;
+      case 'institution-age-all':   return `${base}${api}position/institution/${id}stats_age_all/`;
+      case 'institution-age-mean':  return `${base}${api}position/institution/${id}stats_age_mean/`;
 
       default: break;
       /* eslint-enable no-multi-spaces */

@@ -46,6 +46,7 @@
 <script setup>
 import { reactive, watch } from 'vue';
 import { useApiStore } from '@/stores/api';
+import { useRoute } from 'vue-router';
 import TableWrapper from '@/components/layout/table/TableWrapper.vue';
 import TablePagination from '@/components/layout/table/TablePagination.vue';
 import TablePersonsFilters from '@/components/layout/table/persons/TablePersonsFilters.vue';
@@ -58,14 +59,15 @@ const props = defineProps({
   },
 });
 
+const route = useRoute();
 const api = useApiStore();
 
 const state = reactive({
   isLoading: false,
   items: [],
   filters: {
-    search: '',
-    genre: '',
+    search: route.query?.tpSearch,
+    genre: route.query?.tpGenre,
   },
   pagination: {
     total: 0,

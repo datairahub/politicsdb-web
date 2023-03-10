@@ -4,9 +4,10 @@ import Http from '@/services/http/Http';
 import Url from '@/services/url/Url';
 
 const urlService = new Url(',');
+const apiCache = {};
 
 export const useApiStore = defineStore('api', {
-  // state: () => ({ count: 0, name: 'Eduardo' }),
+  // state: () => ({ }),
   // getters: {
   //   doubleCount: (state) => state.count * 2,
   // },
@@ -17,13 +18,21 @@ export const useApiStore = defineStore('api', {
      * @param {object} param1: object containing model (API.js) and instance id
      * @returns Request promise
      */
-    retrieve(endpoint, id, params) {
+    retrieve(endpoint, id, params, useCache = true) {
       const url = params
         ? API.url(endpoint, id) + urlService.objectToQuerystring(params)
         : API.url(endpoint, id);
+
+      if (useCache && apiCache[url]) {
+        return new Promise((resolve) => {
+          resolve(apiCache[url]);
+        });
+      }
+
       return new Promise((resolve, reject) => {
         Http.get(url, API.getHeaders())
           .then(({ data }) => {
+            if (useCache) apiCache[url] = data;
             resolve(data);
           })
           .catch((err) => {

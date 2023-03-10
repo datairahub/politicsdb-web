@@ -21,10 +21,9 @@
         </div>
         <div class="chart-controls__input">
           <el-select
-            v-model="state.mode"
+            v-model="state.filters.split"
             class=""
             placeholder="Ver por"
-            @change="setMode"
           >
             <el-option
               v-for="option in state.options"
@@ -35,7 +34,7 @@
           </el-select>
         </div>
       </div>
-      <div class="chart-controls__block">
+      <!-- <div class="chart-controls__block">
         <div class="chart-controls__label">
           Filtrar por
         </div>
@@ -62,7 +61,7 @@
             />
           </el-select>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div
@@ -71,7 +70,7 @@
       style="height: calc(100vh - 400px)"
     />
 
-    <ChartLegend :legends="state.chartLegends[state.mode]" />
+    <ChartLegend :legends="state.chartLegends[state.filters.split]" />
   </main>
 </template>
 
@@ -81,7 +80,7 @@ import {
 } from 'vue';
 import { useApiStore } from '@/stores/api';
 import { useRoute, useRouter } from 'vue-router';
-import { timeFormat } from 'd3-time-format';
+import { extent } from 'd3-array';
 import Charts from '@/services/charts/Charts';
 import Colors from '@/services/colors/Colors';
 import Parser from '@/services/parser/Parser';
@@ -102,84 +101,95 @@ const state = reactive({
   chart: null,
   mode: 'all',
   options: [
-    { label: 'Sin distinción', value: 'all' },
+    { label: 'Sin distinción', value: '' },
     { label: 'Por género', value: 'genre' },
   ],
   filters: {
     genre: '',
+    split: 'genre',
   },
   chartData: [],
-  chartInfo: new Charts().getChart((d) => d.id === 'age-all'),
+  chartInfo: new Charts().getChart((d) => d.id === 'age-mean'),
   chartConfig: {
     styles: {
-      opacity: 0.3,
+      opacity: 0.8,
       cursor: 'pointer',
     },
     attrs: {
-      'stroke-width': 3,
+      'stroke-width': 10,
       'stroke-linecap': 'round',
     },
-    axis: {
-      xFormat: timeFormat('%Y'),
-      yFormat: (d) => new Date(d).getUTCFullYear() - 1970,
+    tooltip: (event, d) => {
+      let text = `${d.name}: ${d.values[0].y} años de media`;
+      if (d.genre === 'M') text += ' (Hombres)';
+      if (d.genre === 'F') text += ' (Mujeres)';
+      return text;
     },
-    tooltip: (event, d) => `${d.name}: ${Parser.round(d.values[0].y / (1000 * 60 * 60 * 24 * 365.25), 1)} años`,
     click: (event, d) => {
-      router.push({ name: 'person', params: { personid: d.id } });
+      router.push({
+        name: 'period',
+        params: { periodid: d.id.split(':')[0] },
+        query: { tpGenre: d.genre },
+      });
     },
-    scales: { yMinOverride: 0 },
-    color: Colors.default,
-  },
-  chartModes: {
-    all: { color: Colors.default },
-    genre: { color: { key: 'genre' } },
   },
   chartLegends: {
-    all: [],
+    '': [],
     genre: [{ color: Colors.genre.M, label: 'Hombre' }, { color: Colors.genre.F, label: 'Mujer' }],
   },
 });
 
+const updateConfig = (data) => {
+  const minmax = extent(data, (d) => d.val);
+  return {
+    ...state.chartConfig,
+    color: state.filters.split ? { key: 'color' } : Colors.default,
+    scales: {
+      // yMinOverride: 30,
+      yMinOverride: Parser.round(minmax[0]) - 2,
+      yMaxOverride: Parser.round(minmax[1]) + 2,
+    },
+  };
+};
+
 const updateChart = (rawData) => {
   state.chartData = rawData.map((d) => ({
-    id: d.id,
-    name: d.full_name,
-    genre: Colors.genre[d.genre],
+    id: `${d.id}:${d.genre}`,
+    name: d.name,
+    genre: d.genre,
+    color: Colors.genre[d.genre] || Colors.default,
+    val: Parser.yearsFromSeconds(d.mean_seconds, 2),
     values: [
       {
-        x: new Date(d.position_start),
-        y: new Date(d.position_start) - new Date(d.birth_date),
+        x: new Date(d.start),
+        y: Parser.yearsFromSeconds(d.mean_seconds, 2),
       },
       {
-        x: new Date(d.position_end) > new Date() ? new Date() : new Date(d.position_end),
-        y: new Date(d.position_start) - new Date(d.birth_date),
+        x: new Date(d.end) > new Date() ? new Date() : new Date(d.end),
+        y: Parser.yearsFromSeconds(d.mean_seconds, 2),
       },
     ],
   }));
+
   if (!state.chart) {
-    state.chart = new LinesChart(chart.value, state.chartData, state.chartConfig);
+    state.chart = new LinesChart(chart.value, state.chartData, updateConfig(state.chartData));
   } else {
+    state.chart.updateConfig(updateConfig(state.chartData));
     state.chart.updateData(state.chartData);
   }
 };
+
 const getData = (params = {}) => {
   if (state.isLoading) return;
   state.isLoading = true;
-  api.retrieve('institution-age-all', route.params.institutionid, params)
+  api.retrieve('institution-age-mean', route.params.institutionid, params, false)
     .then((data) => {
       state.institution = data.instance;
-      updateChart(data.positions);
+      updateChart(data.periods);
     })
     .finally(() => {
       state.isLoading = false;
     });
-};
-
-const setMode = (value) => {
-  Object.keys(state.chartModes[value]).forEach((key) => {
-    state.chartConfig[key] = state.chartModes[value][key];
-  });
-  state.chart.updateConfig(state.chartConfig);
 };
 
 onMounted(() => {
@@ -189,4 +199,5 @@ onMounted(() => {
 watch(state.filters, (filters) => {
   getData(filters);
 });
+
 </script>

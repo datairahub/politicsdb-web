@@ -44,25 +44,45 @@ export default class Parser {
   }
 
   /**
+   * Calc total years from a number of seconds
+   * @param {number} seconds number of seconds
+   * @param {integer} decimals decimal places
+   * @returns {number} years
+   */
+  static yearsFromSeconds(seconds, decimals = 0) {
+    return this.round(seconds / (60 * 60 * 24 * 365.25), decimals);
+  }
+
+  /**
+   * Calc total years from a number of days
+   * @param {number} days number of days
+   * @param {integer} decimals decimal places
+   * @returns {number} years
+   */
+  static yearsFromDays(days, decimals = 0) {
+    return this.round(days / 365.25, decimals);
+  }
+
+  /**
    * Calc days between two dates
    * @param {date} start lower date
    * @param {date} end greater date
-   * @param {int} decimals decimal places
-   * @returns {int} days between dates
+   * @param {integer} decimals decimal places
+   * @returns {integer} days between dates
    */
   static daysBetweenDates(start, end = new Date(), decimals = 0) {
-    return +this.round((new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24), decimals);
+    return this.round((new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24), decimals);
   }
 
   /**
    * Calc years between two dates
    * @param {date} start lower date
    * @param {date} end greater date
-   * @param {int} decimals decimal places
-   * @returns {float} years between dates
+   * @param {integer} decimals decimal places
+   * @returns {number} years between dates
    */
   static yearsBetweenDates(start, end = new Date(), decimals = 0) {
-    return +this.round(this.daysBetweenDates(start, end) / 365.25, decimals);
+    return this.yearsFromDays(this.daysBetweenDates(start, end), decimals);
   }
 
   /**
@@ -109,17 +129,17 @@ export default class Parser {
 
   /**
    * Round number
-   * @param {integer, float} num: number to round
-   * @returns {string} number rounded
+   * @param {number} num: number to round
+   * @returns {number} number rounded
    */
-  static round(num, decimalPlaces = 2) {
+  static round(num, decimalPlaces = 0) {
     const exponent = 10 ** decimalPlaces;
-    return (Math.round(+num * exponent) / exponent).toFixed(decimalPlaces);
+    return +(Math.round(+num * exponent) / exponent).toFixed(decimalPlaces);
   }
 
   /**
    * Round and format numbers with prefix and suffix
-   * @param {integer, float} number: number to format
+   * @param {number} number: number to format
    * @param {string} prefix
    * @param {string} suffix
    * @param {integer} decimalPlaces

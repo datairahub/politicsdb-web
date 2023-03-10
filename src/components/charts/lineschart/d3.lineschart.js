@@ -143,11 +143,11 @@ export default class extends d3chart {
     this.yGrid.call(
       d3.axisLeft(this.yScale)
         .tickSize(-this.cfg.width)
-        .tickValues(this.calcTicksValues(
-          this.cfg.axis.yTicks,
-          this.yScale.domain()[0],
-          this.yScale.domain()[1],
-        ))
+        // .tickValues(this.calcTicksValues(
+        //   this.cfg.axis.yTicks,
+        //   this.yScale.domain()[0],
+        //   this.yScale.domain()[1],
+        // ))
         .tickFormat(this.cfg.axis.yFormat),
     );
 
