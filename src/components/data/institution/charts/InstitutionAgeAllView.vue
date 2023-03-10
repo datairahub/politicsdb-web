@@ -127,7 +127,7 @@ const state = reactive({
     click: (event, d) => {
       router.push({ name: 'person', params: { personid: d.id } });
     },
-    scales: { yMinOverride: 0 },
+    // scales: { yMinOverride: 0 },
     color: Colors.default,
   },
   chartModes: {
