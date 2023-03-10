@@ -67,7 +67,7 @@
       <li>
         <strong>Sin restricciones adicionales</strong>: no puede aplicar términos
         legales o medidas tecnológicas que restrinjan legalmente a otros de hacer
-        cualquier cosa que la licencia permita.
+        cualquier cosa que esta licencia permita.
       </li>
     </ul>
     <!-- cc-by-sa end -->
