@@ -50,13 +50,21 @@ export const useApiStore = defineStore('api', {
      * @param {object} param1: object containing model (API.js) and queryparams obj
      * @returns Request promise
      */
-    list(endpoint, params) {
+    list(endpoint, params, useCache = true) {
       const url = params
         ? API.url(endpoint) + urlService.objectToQuerystring(params)
         : API.url(endpoint);
+
+      if (useCache && apiCache[url]) {
+        return new Promise((resolve) => {
+          resolve(apiCache[url]);
+        });
+      }
+
       return new Promise((resolve, reject) => {
         Http.get(url, API.getHeaders())
           .then(({ data }) => {
+            if (useCache) apiCache[url] = data;
             resolve(data);
           })
           .catch((err) => {
