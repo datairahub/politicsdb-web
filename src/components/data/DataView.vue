@@ -2,7 +2,12 @@
   <main class="main main--data">
     <h1>Explorar datos</h1>
 
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+    <p>
+      Puedes descargar la base de datos completa en la sección
+      <router-link :to="{ name: 'download' }">
+        Descargar datos
+      </router-link>.
+    </p>
 
     <h2>Instituciones</h2>
     <CardListWrapper>

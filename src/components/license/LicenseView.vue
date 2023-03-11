@@ -5,7 +5,7 @@
       Esta base de datos está licenciada bajo
       <a href="http://opendatacommons.org/licenses/odbl/1.0/" target="_blank" rel="noopener noreferrer">Open Database License</a>,
       los contenidos web bajo
-      <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-ShareAlike</a>,
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-ShareAlike</a>,
       y el código bajo
       <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank" rel="noopener noreferrer">GNU General Public License v3</a>.
     </p>
@@ -38,7 +38,7 @@
       La información recogida en este apartado es un resumen
       didáctico que <strong>no sustituye</strong>
       la licencia final recogida en
-      <a href="https://creativecommons.org/licenses/by-sa/3.0/legalcode" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-ShareAlike</a>.
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/legalcode" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-ShareAlike</a>.
     </p>
     <h3>Usted es libre de</h3>
     <ul>
