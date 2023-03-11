@@ -22,7 +22,7 @@
       :filters="{ page_size: 5 }"
     />
 
-    <ViewDataFooter/>
+    <ViewDataFooter />
   </main>
 </template>
 

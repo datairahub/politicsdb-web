@@ -23,7 +23,7 @@
       :filters="{ period: state.period.id }"
     />
 
-    <ViewDataFooter/>
+    <ViewDataFooter />
   </main>
 </template>
 

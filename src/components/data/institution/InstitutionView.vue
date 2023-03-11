@@ -28,7 +28,7 @@
       :filters="{ institution: state.institution.id }"
     />
 
-    <ViewDataFooter/>
+    <ViewDataFooter />
   </main>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="view-data-footer">
-    <router-link :to="{name: 'contact'}">
+    <router-link :to="{ name: 'contact' }">
       Comunicar datos incorrectos
     </router-link>
   </div>
