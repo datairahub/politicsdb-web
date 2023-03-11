@@ -1,5 +1,5 @@
 <template>
-  <main class="main main--data">
+  <main v-loading="state.isLoading" class="main main--data">
     <h1>Explorar datos</h1>
 
     <p>
@@ -12,7 +12,7 @@
     <h2>Instituciones</h2>
     <CardListWrapper>
       <CardInstitution
-        v-for="institution in institutions"
+        v-for="institution in state.institutions"
         :key="institution.id"
         :institution="institution"
       />
@@ -25,17 +25,29 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { reactive } from 'vue';
 import { useApiStore } from '@/stores/api';
 import CardListWrapper from '@/components/layout/card/CardListWrapper.vue';
 import CardInstitution from '@/components/layout/card/CardInstitution.vue';
 import TablePersons from '@/components/layout/table/persons/TablePersons.vue';
 
-const institutions = ref([]);
 const api = useApiStore();
 
-api.list('institution')
-  .then(({ results }) => {
-    institutions.value = results;
-  });
+const state = reactive({
+  isLoading: false,
+  institutions: [],
+});
+
+const getData = () => {
+  state.isLoading = true;
+  api.list('institution')
+    .then(({ results }) => {
+      state.institutions = results;
+    })
+    .finally(() => {
+      state.isLoading = false;
+    });
+};
+
+getData();
 </script>

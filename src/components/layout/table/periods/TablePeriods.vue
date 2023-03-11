@@ -2,7 +2,7 @@
   <div class="table-periods">
     <h2>Periodos</h2>
 
-    <TableWrapper v-if="state.items.length">
+    <TableWrapper v-if="state.items.length" v-loading="state.isLoading">
       <template #thead>
         <tr>
           <th>Nombre</th>

@@ -1,42 +1,53 @@
 <template>
-  <main class="main main--data">
+  <main v-loading="state.isLoading" class="main main--data">
     <el-breadcrumb>
       <el-breadcrumb-item :to="{ name: 'data' }">
         Datos
       </el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ name: 'institution', params: { institutionid: period.institution } }">
-        {{ period.institution_name }}
+      <el-breadcrumb-item :to="{ name: 'institution', params: { institutionid: state.period.institution } }">
+        {{ state.period.institution_name }}
       </el-breadcrumb-item>
-      <el-breadcrumb-item>{{ period.name }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ state.period.name }}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <h1>{{ period.institution_name }} - {{ period.name }}</h1>
+    <h1>{{ state.period.institution_name }} - {{ state.period.name }}</h1>
 
     <div>
-      <p><strong>Número: </strong> {{ period.number }}</p>
-      <p><strong>Código: </strong> {{ period.code }}</p>
-      <p><strong>Periodo: </strong> {{ period.start }} - {{ period.end }}</p>
+      <p><strong>Número: </strong> {{ state.period.number }}</p>
+      <p><strong>Código: </strong> {{ state.period.code }}</p>
+      <p><strong>Periodo: </strong> {{ state.period.start }} - {{ state.period.end }}</p>
     </div>
 
     <TablePersons
-      v-if="period.id"
-      :filters="{ period: period.id }"
+      v-if="state.period.id"
+      :filters="{ period: state.period.id }"
     />
   </main>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { reactive } from 'vue';
 import { useApiStore } from '@/stores/api';
 import { useRoute } from 'vue-router';
 import TablePersons from '@/components/layout/table/persons/TablePersons.vue';
 
 const route = useRoute();
-const period = ref({});
 const api = useApiStore();
+const state = reactive({
+  isLoading: false,
+  period: {},
+});
 
-api.retrieve('period', route.params.periodid)
-  .then((data) => {
-    period.value = data;
-  });
+const getData = () => {
+  state.isLoading = true;
+  api.retrieve('period', route.params.periodid)
+    .then((data) => {
+      state.period = data;
+    })
+    .finally(() => {
+      state.isLoading = false;
+    });
+};
+
+getData();
 </script>

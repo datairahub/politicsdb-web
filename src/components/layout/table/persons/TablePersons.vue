@@ -6,7 +6,7 @@
       v-model:filters="state.filters"
     />
 
-    <TableWrapper v-if="state.items.length">
+    <TableWrapper v-if="state.items.length" v-loading="state.isLoading">
       <template #thead>
         <tr>
           <th>Nombre</th>

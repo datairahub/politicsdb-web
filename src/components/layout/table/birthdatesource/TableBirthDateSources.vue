@@ -2,7 +2,7 @@
   <div class="table-birthdatesources">
     <h2>Fechas nacimiento</h2>
 
-    <TableWrapper v-if="state.items.length">
+    <TableWrapper v-if="state.items.length" v-loading="state.isLoading">
       <template #thead>
         <tr>
           <th>Fuente</th>

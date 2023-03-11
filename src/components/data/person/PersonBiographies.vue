@@ -1,5 +1,5 @@
 <template>
-  <div class="biographysources">
+  <div v-loading="state.isLoading" class="biographysources">
     <h2>Biografías</h2>
 
     <div class="biographysources__list">

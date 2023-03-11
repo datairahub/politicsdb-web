@@ -1,5 +1,5 @@
 <template>
-  <main class="main main--data">
+  <main v-loading="state.isLoading" class="main main--data">
     <el-breadcrumb>
       <el-breadcrumb-item :to="{ name: 'data' }">
         Datos
@@ -44,13 +44,22 @@ const route = useRoute();
 const api = useApiStore();
 const charts = new Charts();
 const state = reactive({
+  isLoading: false,
   institution: {},
   charts: [],
 });
 
-api.retrieve('institution', route.params.institutionid)
-  .then((data) => {
-    state.institution = data;
-    state.charts = charts.getCharts(data);
-  });
+const getData = () => {
+  state.isLoading = true;
+  api.retrieve('institution', route.params.institutionid)
+    .then((data) => {
+      state.institution = data;
+      state.charts = charts.getCharts(data);
+    })
+    .finally(() => {
+      state.isLoading = false;
+    });
+};
+
+getData();
 </script>

@@ -2,7 +2,7 @@
   <div class="table-positions">
     <h2>Cargos</h2>
 
-    <TableWrapper v-if="state.items.length">
+    <TableWrapper v-if="state.items.length" v-loading="state.isLoading">
       <template #thead>
         <tr>
           <th>Nombre</th>
