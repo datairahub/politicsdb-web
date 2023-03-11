@@ -27,6 +27,8 @@
       v-if="state.institution.id"
       :filters="{ institution: state.institution.id }"
     />
+
+    <ViewDataFooter/>
   </main>
 </template>
 
@@ -39,6 +41,7 @@ import CardListWrapper from '@/components/layout/card/CardListWrapper.vue';
 import CardChart from '@/components/layout/card/CardChart.vue';
 import TablePeriods from '@/components/layout/table/periods/TablePeriods.vue';
 import TablePersons from '@/components/layout/table/persons/TablePersons.vue';
+import ViewDataFooter from '@/components/layout/views/ViewDataFooter.vue';
 
 const route = useRoute();
 const api = useApiStore();

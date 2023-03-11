@@ -22,6 +22,8 @@
       v-if="state.period.id"
       :filters="{ period: state.period.id }"
     />
+
+    <ViewDataFooter/>
   </main>
 </template>
 
@@ -30,6 +32,7 @@ import { reactive } from 'vue';
 import { useApiStore } from '@/stores/api';
 import { useRoute } from 'vue-router';
 import TablePersons from '@/components/layout/table/persons/TablePersons.vue';
+import ViewDataFooter from '@/components/layout/views/ViewDataFooter.vue';
 
 const route = useRoute();
 const api = useApiStore();

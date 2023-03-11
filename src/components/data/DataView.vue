@@ -21,6 +21,8 @@
     <TablePersons
       :filters="{ page_size: 5 }"
     />
+
+    <ViewDataFooter/>
   </main>
 </template>
 
@@ -30,6 +32,7 @@ import { useApiStore } from '@/stores/api';
 import CardListWrapper from '@/components/layout/card/CardListWrapper.vue';
 import CardInstitution from '@/components/layout/card/CardInstitution.vue';
 import TablePersons from '@/components/layout/table/persons/TablePersons.vue';
+import ViewDataFooter from '@/components/layout/views/ViewDataFooter.vue';
 
 const api = useApiStore();
 

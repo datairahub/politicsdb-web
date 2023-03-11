@@ -46,31 +46,41 @@ $page-button-size: 20px;
 
 .table-pagination {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   &__total {
+    display: none;
     text-align: left;
     flex: 0 0 120px;
     line-height: $page-button-size;
     padding: 2px;
   }
-  &__pages {
-    text-align: center;
-    flex: 1 0 auto;
-    display: flex;
-    justify-content: flex-end;
-    gap: 5px;
-    align-items: center;
-    ul {
-      padding: 0
+  &__pages ul {
+    padding: 0
+  }
+}
+
+@media screen and (min-width: 588px) {
+  .table-pagination {
+    justify-content: space-between;
+    &__total {
+      display: block;
     }
   }
 }
 
-@media screen and (min-width: 568px) {
+@media screen and (min-width: 768px) {
   .table-pagination {
+    display: block;
+    text-align: center;
+    position: relative;
+    &__total {
+      display: block;
+      float: left;
+      position: absolute;
+    }
     &__pages {
-      justify-content: center;
+      display: inline-block;
     }
   }
 }
