@@ -22,7 +22,7 @@
           <td>{{ item.number }}</td>
           <td>{{ item.code }}</td>
           <td>{{ item.start }}</td>
-          <td>{{ item.end }}</td>
+          <td>{{ Parser.overDate(item.end) }}</td>
         </tr>
       </template>
       <template #tfoot>
@@ -42,6 +42,7 @@
 <script setup>
 import { reactive, watch } from 'vue';
 import { useApiStore } from '@/stores/api';
+import Parser from '@/services/parser/Parser';
 import TableWrapper from '@/components/layout/table/TableWrapper.vue';
 import TablePagination from '@/components/layout/table/TablePagination.vue';
 

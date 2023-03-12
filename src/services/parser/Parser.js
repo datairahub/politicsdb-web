@@ -96,6 +96,13 @@ export default class Parser {
     return `${date.getFullYear()}-${Parser.mm(date)}-01`;
   }
 
+  static overDate(date = new Date()) {
+    if (new Date(date) > new Date()) {
+      return '-';
+    }
+    return date;
+  }
+
   /**
    * Convert camelCase to Title Case
    * @param {string} str
