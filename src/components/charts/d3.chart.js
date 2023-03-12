@@ -100,7 +100,7 @@ export default class {
       this.cfg.width = parseInt(this.selection.node().offsetWidth, 10)
         - this.cfg.margin.left
         - this.cfg.margin.right;
-  
+
       this.cfg.height = parseInt(this.selection.node().offsetHeight, 10)
         - this.cfg.margin.top
         - this.cfg.margin.bottom;

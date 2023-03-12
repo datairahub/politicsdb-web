@@ -39,21 +39,21 @@
 </template>
 
 <script setup>
-import { reactive, watch } from 'vue'
-import { useApiStore } from '@/stores/api'
-import TableWrapper from '@/components/layout/table/TableWrapper.vue'
-import TablePagination from '@/components/layout/table/TablePagination.vue'
-import TablePositionsChart from '@/components/layout/table/positions/TablePositionsChart.vue'
+import { reactive, watch } from 'vue';
+import { useApiStore } from '@/stores/api';
+import TableWrapper from '@/components/layout/table/TableWrapper.vue';
+import TablePagination from '@/components/layout/table/TablePagination.vue';
+import TablePositionsChart from '@/components/layout/table/positions/TablePositionsChart.vue';
 
 const props = defineProps({
   filters: {
     type: Object,
     required: false,
-    default: () => ({})
-  }
-})
+    default: () => ({}),
+  },
+});
 
-const api = useApiStore()
+const api = useApiStore();
 
 const state = reactive({
   isLoading: false,
@@ -61,39 +61,39 @@ const state = reactive({
   pagination: {
     total: 0,
     pageSize: 0,
-    pages: 0
+    pages: 0,
   },
-  page: 1
-})
+  page: 1,
+});
 
 const getTableData = () => {
-  if (state.isLoading) return
-  state.isLoading = true
+  if (state.isLoading) return;
+  state.isLoading = true;
   const params = {
     ...props.filters,
     page: state.page,
-    ordering: '-start'
-  }
+    ordering: '-start',
+  };
   api
     .list('position', params)
     .then((data) => {
-      state.pagination.total = data.count
-      state.pagination.pageSize = data.page_size
-      state.pagination.pages = data.total_pages
-      state.page = data.page
-      state.items = data.results
+      state.pagination.total = data.count;
+      state.pagination.pageSize = data.page_size;
+      state.pagination.pages = data.total_pages;
+      state.page = data.page;
+      state.items = data.results;
     })
     .finally(() => {
-      state.isLoading = false
-    })
-}
+      state.isLoading = false;
+    });
+};
 
 watch(
   () => state.page,
   () => {
-    getTableData()
-  }
-)
+    getTableData();
+  },
+);
 
-getTableData()
+getTableData();
 </script>
