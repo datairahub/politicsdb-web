@@ -45,8 +45,9 @@
 
 <script setup>
 import { reactive, watch } from 'vue';
-import { useApiStore } from '@/stores/api';
 import { useRoute } from 'vue-router';
+import { debounce } from 'debounce';
+import { useApiStore } from '@/stores/api';
 import TableWrapper from '@/components/layout/table/TableWrapper.vue';
 import TablePagination from '@/components/layout/table/TablePagination.vue';
 import TablePersonsFilters from '@/components/layout/table/persons/TablePersonsFilters.vue';
@@ -99,11 +100,13 @@ const getTableData = () => {
     });
 };
 
+const debouncedGetTableData = debounce(getTableData, 200);
+
 watch(() => state.filters, () => {
   if (state.page !== 1) {
     state.page = 1;
   } else {
-    getTableData();
+    debouncedGetTableData();
   }
 });
 
