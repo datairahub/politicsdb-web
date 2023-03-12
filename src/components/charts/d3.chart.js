@@ -93,13 +93,18 @@ export default class {
   * Set up chart dimensions
   */
   getDimensions() {
-    this.cfg.width = parseInt(this.selection.node().offsetWidth, 10)
-      - this.cfg.margin.left
-      - this.cfg.margin.right;
-
-    this.cfg.height = parseInt(this.selection.node().offsetHeight, 10)
-      - this.cfg.margin.top
-      - this.cfg.margin.bottom;
+    if (this.cfg.addSize) {
+      this.cfg.width = parseInt(this.selection.node().offsetWidth, 10);
+      this.cfg.height = parseInt(this.selection.node().offsetHeight, 10);
+    } else {
+      this.cfg.width = parseInt(this.selection.node().offsetWidth, 10)
+        - this.cfg.margin.left
+        - this.cfg.margin.right;
+  
+      this.cfg.height = parseInt(this.selection.node().offsetHeight, 10)
+        - this.cfg.margin.top
+        - this.cfg.margin.bottom;
+    }
   }
 
   /**

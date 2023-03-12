@@ -27,15 +27,18 @@ const d3 = {
  * @param {object} config extra configuration parameters
  *
  * Required data format = [
- *   { id: 1, values: [{x: Date, y: Number}, {x: Date, y: Number}] },
+ *   { id: Any, values: [{x: Date, y: Number}, {x: Date, y: Number}] },
  * ]
-*/
+ */
 export default class extends d3chart {
   constructor(selection, data, config) {
     super(selection, data, config, {
       class: 'linechart',
       margin: {
-        top: 20, right: 20, bottom: 20, left: 40,
+        top: 20,
+        right: 20,
+        bottom: 20,
+        left: 40,
       },
       color: 'steelblue', // Accepts strings, array or object
       attrs: {},
@@ -71,19 +74,21 @@ export default class extends d3chart {
     this.line = d3.line();
 
     // Axis group
-    this.axisg = this.g.append('g')
-      .attr('class', `chart__axis chart__axis--${this.cfg.class}`);
+    this.axisg = this.g.append('g').attr('class', `chart__axis chart__axis--${this.cfg.class}`);
 
     // Horizontal grid
-    this.yGrid = this.axisg.append('g')
+    this.yGrid = this.axisg
+      .append('g')
       .attr('class', `chart__grid chart__grid--y chart__grid--${this.cfg.class}`);
 
     // Bottom axis
-    this.xAxis = this.axisg.append('g')
+    this.xAxis = this.axisg
+      .append('g')
       .attr('class', `chart__axis-x chart__axis-x--${this.cfg.class}`);
 
     // Vertical axis
-    this.yAxis = this.axisg.append('g')
+    this.yAxis = this.axisg
+      .append('g')
       .attr('class', `chart__axis-y chart__axis-y--${this.cfg.class} chart__grid`);
 
     this.setChartDimension();
@@ -98,10 +103,15 @@ export default class extends d3chart {
     const width = this.cfg.width + this.cfg.margin.left + this.cfg.margin.right;
     const height = this.cfg.height + this.cfg.margin.top + this.cfg.margin.bottom;
 
-    this.svg
-      .attr('viewBox', `0 0 ${width} ${height}`)
-      .attr('width', width)
-      .attr('height', height);
+    this.svg.attr('viewBox', `0 0 ${width} ${height}`).attr('width', width).attr('height', height);
+  }
+
+  /**
+   * Bind data to main elements groups
+   */
+  bindData() {
+    // Lines group
+    this.linesgroup = this.g.selectAll('.chart__lines-group').data(this.data, (d) => d.id);
   }
 
   /**
@@ -123,25 +133,20 @@ export default class extends d3chart {
       : this.cfg.scales.xMaxOverride;
 
     // Calcule vertical scale
-    this.yScale
-      .domain([yMin, yMax])
-      .rangeRound([this.cfg.height, 0]);
+    this.yScale.domain([yMin, yMax]).rangeRound([this.cfg.height, 0]);
 
     // Calcule horizontal scale
-    this.xScale
-      .domain([xMin, xMax])
-      .rangeRound([0, this.cfg.width]);
+    this.xScale.domain([xMin, xMax]).rangeRound([0, this.cfg.width]);
 
     // Set up line function
-    this.line
-      .x((d) => this.xScale(d.x))
-      .y((d) => this.yScale(d.y));
+    this.line.x((d) => this.xScale(d.x)).y((d) => this.yScale(d.y));
 
     if (this.cfg.curve) this.line.curve(this.cfg.curve);
 
     // Redraw grid
     this.yGrid.call(
-      d3.axisLeft(this.yScale)
+      d3
+        .axisLeft(this.yScale)
         .tickSize(-this.cfg.width)
         // .tickValues(this.calcTicksValues(
         //   this.cfg.axis.yTicks,
@@ -154,20 +159,7 @@ export default class extends d3chart {
     // Redraw horizontal axis
     this.xAxis
       .attr('transform', `translate(0,${this.cfg.height})`)
-      .call(
-        d3.axisBottom(this.xScale)
-          .tickFormat(this.cfg.axis.xFormat),
-      );
-  }
-
-  /**
-   * Bind data to main elements groups
-   */
-  bindData() {
-    // Lines group
-    this.linesgroup = this.g
-      .selectAll('.chart__lines-group')
-      .data(this.data, (d) => d.id);
+      .call(d3.axisBottom(this.xScale).tickFormat(this.cfg.axis.xFormat));
   }
 
   /**
@@ -178,11 +170,11 @@ export default class extends d3chart {
     const linegroups = this.linesgroup
       .enter()
       .append('g')
-      .attr('class', 'chart__lines-group chart__lines-group--straighlineschart');
+      .attr('class', `chart__lines-group chart__lines-group--${this.cfg.class}`);
 
     linegroups
       .append('path')
-      .attr('class', 'chart__line chart__line--straighlineschart')
+      .attr('class', `chart__line chart__line--${this.cfg.class}`)
       .attr('d', (d) => this.line(d.values));
 
     Object.keys(this.cfg.attrs).forEach((key) => {
@@ -200,9 +192,7 @@ export default class extends d3chart {
       })
       .on('mouseover', (event, d) => {
         if (!this.cfg.tooltip) return;
-        this.tooltip
-          .html(`<div>${this.cfg.tooltip(event, d)}</div>`)
-          .classed('active', true);
+        this.tooltip.html(`<div>${this.cfg.tooltip(event, d)}</div>`).classed('active', true);
       })
       .on('mouseout', () => {
         if (!this.cfg.tooltip) return;
@@ -216,7 +206,7 @@ export default class extends d3chart {
         const left = pos[0] > selectionwidth / 2 ? pos[0] - tooltipSizes.width - 10 : pos[0] + 10;
         this.tooltip
           .style('left', `${left}px`)
-          .style('top', `${pos[1] - (tooltipSizes.height / 2)}px`);
+          .style('top', `${pos[1] - tooltipSizes.height / 2}px`);
       });
   }
 
@@ -225,7 +215,8 @@ export default class extends d3chart {
    */
   updateElements() {
     // Redraw lines
-    this.g.selectAll('.chart__line')
+    this.g
+      .selectAll('.chart__line')
       .attr('stroke', (d) => this.colorElement(d))
       .attr('d', (d) => this.line(d.values));
   }
@@ -234,8 +225,6 @@ export default class extends d3chart {
    * Remove chart's elements without data
    */
   exitElements() {
-    this.linesgroup.exit()
-      .style('opacity', 0)
-      .remove();
+    this.linesgroup.exit().style('opacity', 0).remove();
   }
 }
