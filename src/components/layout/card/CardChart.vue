@@ -33,7 +33,7 @@ const imageSrc = (chart) => (chart && chart.id
 <style lang="scss">
 .chart-chart {
   &__bg {
-    height: 100px;
+    height: 100%;
     width: 100%;
     background-size: cover;
     background-position: center;

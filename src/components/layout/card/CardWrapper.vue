@@ -28,6 +28,8 @@ defineProps({
   box-shadow: 0 7px 14px 0 rgb(60 66 87 / 10%), 0 3px 6px 0 rgb(0 0 0 / 7%);
   border-radius: 4px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   &__header {
     padding: 10px;
     a {
@@ -48,6 +50,8 @@ defineProps({
   }
   &__body {
     padding: 10px;
+    flex: 1 1 auto;
+    min-height: 100px;
   }
   &__footer {
     padding: 10px;
