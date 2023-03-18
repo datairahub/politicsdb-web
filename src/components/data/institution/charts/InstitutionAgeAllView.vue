@@ -68,7 +68,7 @@
     <div
       ref="chart"
       v-loading="state.isLoading"
-      style="height: calc(100vh - 400px)"
+      style="height: calc(100vh - 200px)"
     />
 
     <ChartLegend :legends="state.chartLegends[state.mode]" />
