@@ -25,7 +25,7 @@
             {{ item.birth_date }}
           </td>
           <td>
-            {{ item.genre }}
+            {{ Person.translateGenre(item.genre) }}
           </td>
         </tr>
       </template>
@@ -48,6 +48,7 @@ import { reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { debounce } from 'debounce';
 import { useApiStore } from '@/stores/api';
+import Person from '@/services/person/Person';
 import TableWrapper from '@/components/layout/table/TableWrapper.vue';
 import TablePagination from '@/components/layout/table/TablePagination.vue';
 import TablePersonsFilters from '@/components/layout/table/persons/TablePersonsFilters.vue';

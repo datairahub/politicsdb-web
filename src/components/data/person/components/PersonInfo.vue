@@ -10,13 +10,14 @@
       <p><strong>Apellidos: </strong> {{ person.last_name }}</p>
       <p><strong>Fecha de nacimiento: </strong> {{ person.birth_date }}</p>
       <p><strong>Edad: </strong> {{ getAge(person.birth_date) }} años</p>
-      <p><strong>Género: </strong> {{ translateGenre(person.genre) }}</p>
+      <p><strong>Género: </strong> {{ Person.translateGenre(person.genre) }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
 import Parser from '@/services/parser/Parser';
+import Person from '@/services/person/Person';
 
 defineProps({
   person: {
@@ -25,13 +26,6 @@ defineProps({
     default: () => ({}),
   },
 });
-
-const translateGenre = (genre) => {
-  if (genre === 'O') return 'Otro';
-  return genre === 'M'
-    ? 'Hombre'
-    : 'Mujer';
-};
 
 const getAge = (birthDate) => {
   if (!birthDate) return '?';
