@@ -31,6 +31,6 @@ defineProps({
 });
 
 const imageSrc = (institution) => (institution && institution.id
-  ? `${import.meta.env.VITE_STATIC_URL}images/adm0/${institution.adm0}.png`
+  ? `${import.meta.env.VITE_STATIC_URL}images/adm0/${institution.adm0_code}.png`
   : '');
 </script>
