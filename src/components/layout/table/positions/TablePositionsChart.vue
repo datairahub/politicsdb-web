@@ -30,13 +30,15 @@ const props = defineProps({
 });
 
 const drawChart = (positions) => {
-  state.chartData = positions.map((d) => ({
-    id: d.id,
-    name: d.full_name,
-    type: d.short_name,
-    start: new Date(d.start),
-    end: new Date(d.end) > new Date() ? new Date() : new Date(d.end),
-  }));
+  state.chartData = positions
+    .filter((d) => new Date(d.start) < new Date())
+    .map((d) => ({
+      id: d.id,
+      name: d.full_name,
+      type: d.short_name,
+      start: new Date(d.start),
+      end: new Date(d.end) > new Date() ? new Date() : new Date(d.end),
+    }));
   state.chart = new LifeTimeChart(chart.value, state.chartData, state.chartConfig);
 };
 

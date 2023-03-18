@@ -20,7 +20,7 @@
             </router-link>
           </td>
           <td>
-            {{ item.start }}
+            {{ Parser.overDate(item.start) }}
           </td>
           <td>
             {{ Parser.overDate(item.end) }}

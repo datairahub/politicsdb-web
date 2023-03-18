@@ -8,14 +8,14 @@
           <h3>{{ item.name }}</h3>
           <div class="biographysources__item-link">
             <a :href="item.url" :title="item.url" target="_blank" rel="noopener noreferrer">
-              {{ item.url }}
+              {{ getUrl(item) }}
             </a>
           </div>
         </div>
         <div class="biographysources__item-body">
-          {{ item.expanded ? item.bio : `${item.bio.substring(0, state.limit)}...` }}
+          {{ getBiography(item) }}
         </div>
-        <div class="biographysources__item-button">
+        <div v-if="item.value.length > state.limit" class="biographysources__item-button">
           <el-button size="small" @click="item.expanded = !item.expanded">
             {{ item.expanded ? 'Ver menos' : 'Ver más' }}
           </el-button>
@@ -63,6 +63,18 @@ const getTableData = () => {
     .finally(() => {
       state.isLoading = false;
     });
+};
+
+const getUrl = (item) => {
+  if (item.url.length <= 60) return item.url;
+  return `${item.url.substring(0, 60)}...`;
+};
+
+const getBiography = (item) => {
+  if (item.value.length <= state.limit) return item.value;
+  return item.expanded
+    ? item.value
+    : `${item.value.substring(0, state.limit)}...`;
 };
 
 watch(() => state.page, () => {

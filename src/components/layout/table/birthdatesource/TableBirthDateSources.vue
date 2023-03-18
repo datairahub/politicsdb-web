@@ -16,7 +16,7 @@
             {{ item.name }}
           </td>
           <td>
-            {{ item.date }}{{ item.is_exact ? '' : '*' }}
+            {{ item.value }}
           </td>
           <td style="max-width: 100px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
             <a :href="item.url" :title="item.url" target="_blank" rel="noopener noreferrer">
