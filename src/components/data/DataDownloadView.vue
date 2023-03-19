@@ -9,18 +9,11 @@
 
     <h1>Descargar datos</h1>
 
-    <p>
-      Puedes explorar los datos dirigiéndote a la sección
-      <router-link :to="{ name: 'data' }">Explorar datos</router-link>.
-    </p>
-
     <h2>Descargar base de datos completa</h2>
 
     <p>
       Esta base de datos está licenciada bajo
       <a href="http://opendatacommons.org/licenses/odbl/1.0/" target="_blank" rel="noopener noreferrer">Open Database License</a>.
-    </p>
-    <p>
       Si transmite públicamente esta base de datos o cualquier
       base de datos derivada, deberá hacerlo <strong>bajo los términos
         de esta licencia u otra compatible, incluir una copia de

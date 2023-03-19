@@ -1,6 +1,6 @@
 <template>
   <div class="table-persons">
-    <h2>Personas</h2>
+    <h2>{{ props.title }}</h2>
 
     <TablePersonsFilters
       v-model:filters="state.filters"
@@ -54,6 +54,11 @@ import TablePagination from '@/components/layout/table/TablePagination.vue';
 import TablePersonsFilters from '@/components/layout/table/persons/TablePersonsFilters.vue';
 
 const props = defineProps({
+  title: {
+    type: String,
+    reuired: false,
+    default: 'Personas',
+  },
   filters: {
     type: Object,
     required: false,

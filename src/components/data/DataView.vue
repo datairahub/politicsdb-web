@@ -9,6 +9,10 @@
       Puedes descargar la base de datos completa en la sección
       <router-link :to="{ name: 'download' }">Descargar datos</router-link>.
     </p>
+    <p>
+      Puedes explorar los datos faltantes en la sección
+      <router-link :to="{ name: 'missing' }">Datos faltantes</router-link>.
+    </p>
 
     <h2>Instituciones</h2>
     <CardListWrapper>
@@ -22,8 +26,6 @@
     <TablePersons
       :filters="{ page_size: 5 }"
     />
-
-    <ViewDataFooter />
   </main>
 </template>
 
@@ -33,7 +35,6 @@ import { useApiStore } from '@/stores/api';
 import CardListWrapper from '@/components/layout/card/CardListWrapper.vue';
 import CardInstitution from '@/components/layout/card/CardInstitution.vue';
 import TablePersons from '@/components/layout/table/persons/TablePersons.vue';
-import ViewDataFooter from '@/components/layout/views/ViewDataFooter.vue';
 
 const api = useApiStore();
 

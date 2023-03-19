@@ -21,7 +21,10 @@
       :filters="{ person: state.person.id }"
     />
 
-    <ViewDataFooter />
+    <ViewDataFooter
+      type="person"
+      :instance="state.person"
+    />
   </main>
 </template>
 

@@ -10,6 +10,11 @@ export default [
     component: () => import('@/components/data/DataDownloadView.vue'),
   },
   {
+    path: '/data/missing',
+    name: 'missing',
+    component: () => import('@/components/data/DataMissingView.vue'),
+  },
+  {
     path: '/data/institution/:institutionid([a-fA-F0-9-]+)/',
     name: 'institution',
     component: () => import('@/components/data/institution/InstitutionView.vue'),
