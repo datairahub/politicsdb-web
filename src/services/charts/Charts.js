@@ -4,6 +4,13 @@
 export default class {
   charts = [
     {
+      id: 'age-all',
+      name: 'Distribución de edad',
+      image: 'age-all',
+      desc: 'Distribución por edad de cada miembro de la institución.',
+      body: 'Las líneas representan la edad de cada representante, calculada a partir de su edad en el momento de la toma de posesión del cargo.',
+    },
+    {
       id: 'age-mean',
       name: 'Media de edad',
       image: 'age-mean',
@@ -11,11 +18,11 @@ export default class {
       body: 'Las líneas representan la edad de cada periodo, calculada a partir de la edad de sus miembros en el momento de la toma de posesión del cargo.',
     },
     {
-      id: 'age-all',
-      name: 'Distribución de edad',
-      image: 'age-all',
-      desc: 'Distribución por edad de cada miembro de la institución.',
-      body: 'Las líneas representan la edad de cada representante, calculada a partir de su edad en el momento de la toma de posesión del cargo.',
+      id: 'genre',
+      name: 'Presencia por género',
+      image: 'genre',
+      desc: 'Total de miembros por género que han formado parte de la institución.',
+      body: 'Cada barra representa el número total de miembros que han formado parte de la institución en cada uno de sus periodos.',
     },
   ];
 

@@ -17,7 +17,7 @@ const d3 = {
 };
 
 /**
- * Displays a line chart
+ * Displays a life time chart
  *
  * @param {htmlNode} selection vue ref element: this.$refs.my_selected_node
  * @param {object} data data to represent
@@ -98,17 +98,6 @@ export default class extends d3chart {
 
     this.setChartDimension();
     this.updateChart();
-  }
-
-  /**
-   * Set up chart dimensions (non depending on data)
-   */
-  setChartDimension() {
-    // Resize SVG element
-    const width = this.cfg.width + this.cfg.margin.left + this.cfg.margin.right;
-    const height = this.cfg.height + this.cfg.margin.top + this.cfg.margin.bottom;
-
-    this.svg.attr('viewBox', `0 0 ${width} ${height}`).attr('width', width).attr('height', height);
   }
 
   /**

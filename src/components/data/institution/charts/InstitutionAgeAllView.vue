@@ -85,6 +85,7 @@
         cuales no ha sido posible determinar su fecha de nacimiento.
       </p>
     </div>
+
   </main>
 </template>
 
@@ -183,9 +184,9 @@ const getData = (params = {}) => {
   api.retrieve('institution-age-all', route.params.institutionid, params)
     .then((data) => {
       state.institution = data.instance;
-      state.hasDateCount = data.positions.length;
+      state.hasDateCount = data.persons.length;
       state.noHasDateCount = data.no_date;
-      updateChart(data.positions);
+      updateChart(data.persons);
     })
     .finally(() => {
       state.isLoading = false;

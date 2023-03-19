@@ -55,10 +55,13 @@ export default class {
   }
 
   /**
-  * Set chart dimensional sizes
-  */
+   * Set up chart dimensions (non depending on data)
+   */
   setChartDimension() {
-    console.error('d3chart.setChartDimension not implemented');
+    const width = this.cfg.width + this.cfg.margin.left + this.cfg.margin.right;
+    const height = this.cfg.height + this.cfg.margin.top + this.cfg.margin.bottom;
+
+    this.svg.attr('viewBox', `0 0 ${width} ${height}`).attr('width', width).attr('height', height);
   }
 
   /**

@@ -1,5 +1,5 @@
 import { select, selectAll, pointer } from 'd3-selection';
-import { scaleLinear, scaleTime } from 'd3-scale';
+import { scaleLinear, scaleBand } from 'd3-scale';
 import { min, max, extent } from 'd3-array';
 import { line } from 'd3-shape';
 import { axisLeft, axisBottom } from 'd3-axis';
@@ -10,7 +10,7 @@ const d3 = {
   selectAll,
   pointer,
   scaleLinear,
-  scaleTime,
+  scaleBand,
   min,
   max,
   extent,
@@ -20,7 +20,7 @@ const d3 = {
 };
 
 /**
- * Displays a line chart
+ * Displays a grouped bar chart
  *
  * @param {htmlNode} selection vue ref element: this.$refs.my_selected_node
  * @param {object} data data to represent
@@ -33,7 +33,7 @@ const d3 = {
 export default class extends d3chart {
   constructor(selection, data, config) {
     super(selection, data, config, {
-      class: 'linechart',
+      class: 'stackedchart',
       margin: {
         top: 20,
         right: 20,
@@ -43,16 +43,17 @@ export default class extends d3chart {
       color: 'steelblue', // Accepts strings, array or object
       attrs: {},
       styles: {},
-      curve: null, // Accepts d3-line curve functions like curveLinear https://github.com/d3/d3-shape#curveLinear
       scales: {
-        xMinOverride: null,
-        xMaxOverride: null,
+        xPaddingInner: 0.1,
+        xPaddingOuter: 0.1,
+        xSubPaddingInner: 0.1,
+        xSubPaddingOuter: 0.2,
         yMinOverride: null,
         yMaxOverride: null,
       },
       axis: {
         yFormat: (d) => d,
-        xFormat: (d) => d.getUTCFullYear(),
+        xFormat: (d) => d,
         yTicks: 10,
         xTicks: 5,
       },
@@ -70,8 +71,8 @@ export default class extends d3chart {
 
     // Init scales
     this.yScale = d3.scaleLinear();
-    this.xScale = d3.scaleTime();
-    this.line = d3.line();
+    this.xScale = d3.scaleBand();
+    this.xSubScale = d3.scaleBand();
 
     // Axis group
     this.axisg = this.g.append('g').attr('class', `chart__axis chart__axis--${this.cfg.class}`);
@@ -100,7 +101,7 @@ export default class extends d3chart {
    */
   bindData() {
     // Lines group
-    this.linesgroup = this.g.selectAll('.chart__lines-group').data(this.data, (d) => d.id);
+    this.barsgroup = this.g.selectAll('.chart__bars-group').data(this.data, (d) => d.id);
   }
 
   /**
@@ -108,29 +109,36 @@ export default class extends d3chart {
    */
   setScales() {
     const flatData = this.data.flatMap((d) => d.values);
+
     const yMin = this.cfg.scales.yMinOverride === null
-      ? d3.min(flatData, (d) => d.y)
+      ? d3.min(flatData, (d) => d.value)
       : this.cfg.scales.yMinOverride;
     const yMax = this.cfg.scales.yMaxOverride === null
-      ? d3.max(flatData, (d) => d.y)
+      ? d3.max(flatData, (d) => d.value)
       : this.cfg.scales.yMaxOverride;
-    const xMin = this.cfg.scales.xMinOverride === null
-      ? d3.min(flatData, (d) => d.x)
-      : this.cfg.scales.xMinOverride;
-    const xMax = this.cfg.scales.xMaxOverride === null
-      ? d3.max(flatData, (d) => d.x)
-      : this.cfg.scales.xMaxOverride;
+    
+    const xValues = this.data
+      .reduce((acc, curr) => (acc.includes(curr.id) ? acc : acc.concat(curr.id)), []);
+
+    const xSubValues = flatData
+      .reduce((acc, curr) => (acc.includes(curr.key) ? acc : acc.concat(curr.key)), []);
 
     // Calcule vertical scale
     this.yScale.domain([yMin, yMax]).rangeRound([this.cfg.height, 0]);
 
-    // Calcule horizontal scale
-    this.xScale.domain([xMin, xMax]).rangeRound([0, this.cfg.width]);
+    // Calcule horizontal scale (for groups)
+    this.xScale
+      .domain(xValues)
+      .range([0, this.cfg.width])
+      .paddingInner(this.cfg.scales.xPaddingInner)
+      .paddingOuter(this.cfg.scales.xPaddingOuter);
 
-    // Set up line function
-    this.line.x((d) => this.xScale(d.x)).y((d) => this.yScale(d.y));
-
-    if (this.cfg.curve) this.line.curve(this.cfg.curve);
+    // Calcule horizontal scale (inside groups)
+    this.xSubScale
+      .domain(xSubValues)
+      .range([0, this.xScale.bandwidth()])
+      .paddingInner(this.cfg.scales.xSubPaddingInner)
+      .paddingOuter(this.cfg.scales.xSubPaddingOuter);
 
     // Redraw grid
     this.yGrid.call(
@@ -149,32 +157,42 @@ export default class extends d3chart {
     this.xAxis
       .attr('transform', `translate(0,${this.cfg.height})`)
       .call(d3.axisBottom(this.xScale).tickFormat(this.cfg.axis.xFormat));
-  }
 
+  }
+  
   /**
    * Add new chart's elements
    */
   enterElements() {
     // Elements to add
-    const linegroups = this.linesgroup
+    const bargroups = this.barsgroup
       .enter()
       .append('g')
-      .attr('class', `chart__lines-group chart__lines-group--${this.cfg.class}`);
+      .attr('class', `chart__bars-group chart__bars-group--${this.cfg.class}`)
+      .attr('transform', (d) => `translate(${this.xScale(d.id)},0)`);
 
-    linegroups
-      .append('path')
-      .attr('class', `chart__line chart__line--${this.cfg.class}`)
-      .attr('d', (d) => this.line(d.values));
+    const bars = bargroups
+      .selectAll('.chart__bar')
+      .data((d) => d.values)
+      .enter()
+      .append('rect');
+
+    bars
+      .attr('class', `chart__bar chart__bar--${this.cfg.class}`)
+      .attr('x', (d) => this.xSubScale(d.key))
+      .attr('width', this.xSubScale.bandwidth())
+      .attr('y', (d) => this.yScale(d.value))
+      .attr('height', (d) => this.cfg.height - this.yScale(d.value));
 
     Object.keys(this.cfg.attrs).forEach((key) => {
-      linegroups.attr(key, this.cfg.attrs[key]);
+      bars.attr(key, this.cfg.attrs[key]);
     });
 
     Object.keys(this.cfg.styles).forEach((key) => {
-      linegroups.style(key, this.cfg.styles[key]);
+      bars.style(key, this.cfg.styles[key]);
     });
 
-    linegroups
+    bars
       .on('click', (event, d) => {
         if (!this.cfg.click) return;
         this.cfg.click(event, d);
@@ -203,17 +221,16 @@ export default class extends d3chart {
    * Update chart's elements based on data change
    */
   updateElements() {
-    // Redraw lines
+    // Redraw bars
     this.g
-      .selectAll('.chart__line')
-      .attr('stroke', (d) => this.colorElement(d))
-      .attr('d', (d) => this.line(d.values));
+      .selectAll('.chart__bar')
+      .attr('fill', (d) => this.colorElement(d));
   }
 
   /**
    * Remove chart's elements without data
    */
   exitElements() {
-    this.linesgroup.exit().style('opacity', 0).remove();
+    // this.barsgroup.exit().style('opacity', 0).remove();
   }
 }
