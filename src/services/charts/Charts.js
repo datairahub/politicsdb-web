@@ -14,15 +14,22 @@ export default class {
       id: 'age-mean',
       name: 'Media de edad',
       image: 'age-mean',
-      desc: 'Media por edad de de los miembros en el momento de la toma de posesión de su cargo por cada periodo.',
+      desc: 'Media de edad de los miembros de la institución.',
       body: 'Las líneas representan la edad de cada periodo, calculada a partir de la edad de sus miembros en el momento de la toma de posesión del cargo.',
     },
     {
       id: 'genre',
       name: 'Miembros por género',
       image: 'genre',
-      desc: 'Total de miembros por género que han formado parte de la institución.',
-      body: 'Cada barra representa el número total de miembros de la institución que han formado parte en algún momento de cada uno de sus periodos.',
+      desc: 'Total de miembros por género por cada periodo.',
+      body: 'Cada barra representa el número total de miembros en cada periodo según su género.',
+    },
+    {
+      id: 'month',
+      name: 'Miembros por mes de nacimiento',
+      image: 'month',
+      desc: 'Total de miembros por mes de nacimiento por cada periodo.',
+      body: 'Cada barra representa el número total de miembros de la institución según su mes de nacimiento.',
     },
   ];
 

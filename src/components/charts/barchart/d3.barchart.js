@@ -222,14 +222,32 @@ export default class extends d3chart {
   updateElements() {
     // Redraw bars
     this.g
+      .selectAll('.chart__bars-group')
+      .attr('transform', (d) => `translate(${this.xScale(d.id)},0)`);
+
+    this.g
       .selectAll('.chart__bar')
-      .attr('fill', (d) => this.colorElement(d));
+      .attr('fill', (d) => this.colorElement(d))
+      .attr('x', (d) => this.xSubScale(d.key))
+      .attr('width', this.xSubScale.bandwidth())
+      .attr('y', (d) => this.yScale(d.value))
+      .attr('height', (d) => this.cfg.height - this.yScale(d.value));
   }
 
   /**
    * Remove chart's elements without data
    */
   exitElements() {
-    this.barsgroup.exit().style('opacity', 0).remove();
+    this.g
+      .selectAll('.chart__bars-group')
+      .exit()
+      .style('opacity', 0)
+      .remove();
+
+    this.g
+      .selectAll('.chart__bar')
+      .exit()
+      .style('opacity', 0)
+      .remove();
   }
 }

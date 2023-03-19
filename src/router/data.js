@@ -35,6 +35,11 @@ export default [
     component: () => import('@/components/data/institution/charts/InstitutionGenreView.vue'),
   },
   {
+    path: '/data/institution/:institutionid([a-fA-F0-9-]+)/month/',
+    name: 'institution-month',
+    component: () => import('@/components/data/institution/charts/InstitutionMonthView.vue'),
+  },
+  {
     path: '/data/period/:periodid([a-fA-F0-9-]+)/',
     name: 'period',
     component: () => import('@/components/data/period/PeriodView.vue'),

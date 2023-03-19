@@ -22,16 +22,17 @@
 
     <ChartLegend :legends="state.chartLegends" />
 
-    <div v-if="state.hasGenreCount" class="chart-notes">
+    <div v-if="state.hasDateCount" class="chart-notes">
       <strong>Nota:</strong>
       <p>
-        El gráfico representa datos de un total de {{ Parser.numFormatter(state.hasGenreCount) }}
+        El gráfico representa datos de un total de {{ Parser.numFormatter(state.hasDateCount) }}
         miembros pertenecientes a esta institución para los cuales ha sido posible determinar
-        su género.
+        su fecha de nacimiento con una precisión mínima mensual (mes/año o día/mes/año).
       </p>
-      <p v-if="state.noHasGenreCount > 0">
-        Faltan datos de {{ Parser.numFormatter(state.noHasGenreCount) }} miembros para los
-        cuales no ha sido posible determinar su género.
+      <p v-if="state.noHasDateCount > 0">
+        Faltan datos de {{ Parser.numFormatter(state.noHasDateCount) }} miembros para los
+        cuales no ha sido posible determinar su fecha de nacimiento con una precisión mínima
+        mensual (mes/año o día/mes/año).
       </p>
     </div>
   </main>
@@ -60,35 +61,35 @@ const state = reactive({
   isLoading: false,
   institution: {},
   data: [],
-  hasGenreCount: 0,
-  noHasGenreCount: 0,
+  hasDateCount: 0,
+  noHasDateCount: 0,
   chart: null,
   chartData: [],
-  chartInfo: new Charts().getChart((d) => d.id === 'genre'),
+  chartInfo: new Charts().getChart((d) => d.id === 'month'),
   chartConfig: {
     styles: {
       opacity: 0.9,
       cursor: 'pointer',
     },
     tooltip: (event, d) => {
-      let text = `${d.name}: ${d.value}`;
-      if (d.key === 'M') text += ' hombres';
-      if (d.key === 'F') text += ' mujeres';
-      return text;
+      let text = `${d.name}: ${d.value} `;
+      text += 'personas nacidas';
+      return `${text} en ${Parser.strMonthFromInt(d.key)}`;
     },
     click: (event, d) => {
       router.push({
         name: 'period',
         params: { periodid: d.period },
-        query: { tpGenre: d.key },
+        query: { tpBirthMonth: d.key },
       });
     },
     color: { key: 'color' },
   },
-  chartLegends: [
-    { color: Colors.genre.M, label: 'Hombre' },
-    { color: Colors.genre.F, label: 'Mujer' },
-  ],
+  chartLegends: Array
+    .from({ length: 12 }, (v, k) => ({
+      color: Colors.monthScale(k + 1),
+      label: Parser.strMonthFromInt(k + 1),
+    })),
 });
 
 const updateChart = (rawData) => {
@@ -97,11 +98,11 @@ const updateChart = (rawData) => {
       const idx = acc.findIndex((d) => d.period === curr.id);
       if (idx > -1) {
         acc[idx].values.push({
-          key: curr.genre,
+          key: curr.month,
           value: curr.total,
           period: curr.id,
           name: curr.name,
-          color: Colors.genre[curr.genre],
+          color: Colors.monthScale(curr.month),
         });
       } else {
         acc.push({
@@ -109,11 +110,11 @@ const updateChart = (rawData) => {
           period: curr.id,
           start: new Date(curr.start),
           values: [{
-            key: curr.genre,
+            key: curr.month,
             value: curr.total,
             period: curr.id,
             name: curr.name,
-            color: Colors.genre[curr.genre],
+            color: Colors.monthScale(curr.month),
           }],
         });
       }
@@ -131,11 +132,11 @@ const updateChart = (rawData) => {
 const getData = (params = {}) => {
   if (state.isLoading) return;
   state.isLoading = true;
-  api.retrieve('institution-genre', route.params.institutionid, params)
+  api.retrieve('institution-month', route.params.institutionid, params)
     .then((data) => {
       state.institution = data.instance;
-      state.hasGenreCount = data.has_genre;
-      state.noHasGenreCount = data.no_genre;
+      state.hasDateCount = data.has_date;
+      state.noHasDateCount = data.no_date;
       updateChart(data.periods);
     })
     .finally(() => {

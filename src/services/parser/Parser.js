@@ -96,11 +96,29 @@ export default class Parser {
     return `${date.getFullYear()}-${Parser.mm(date)}-01`;
   }
 
+  /**
+   * Check if provided date is greater than today. If so, return -
+   * @param {date} date date to check
+   * @returns {date/string} date or '-'
+   */
   static overDate(date = new Date()) {
     if (new Date(date) > new Date()) {
       return '-';
     }
     return date;
+  }
+
+  /**
+   * Convert a month number to a month Name
+   * @param {integer} monthNumber month number, with january = 1
+   * @param {string} format output format
+   * @param {string} lang language (iso code)
+   * @returns {string} month name
+   */
+  static strMonthFromInt(monthNumber, format = 'long', lang = 'es-ES') {
+    const date = new Date();
+    date.setMonth(monthNumber - 1);
+    return date.toLocaleString(lang, { month: format });
   }
 
   /**

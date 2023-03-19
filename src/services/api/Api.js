@@ -31,6 +31,7 @@ class ApiService {
       case 'institution-age-all':   return `${base}${api}position/institution/${id}stats_age_all/`;
       case 'institution-age-mean':  return `${base}${api}position/institution/${id}stats_age_mean/`;
       case 'institution-genre':     return `${base}${api}position/institution/${id}stats_genre/`;
+      case 'institution-month':     return `${base}${api}position/institution/${id}stats_month/`;
 
       default: break;
       /* eslint-enable no-multi-spaces */

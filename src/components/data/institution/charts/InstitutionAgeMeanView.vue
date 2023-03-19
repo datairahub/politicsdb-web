@@ -67,7 +67,7 @@
     <div
       ref="chart"
       v-loading="state.isLoading"
-      style="height: calc(100vh - 400px)"
+      style="height: calc(100vh - 460px)"
     />
 
     <ChartLegend :legends="state.chartLegends[state.filters.split]" />
@@ -89,7 +89,7 @@
 
 <script setup>
 import {
-  ref, reactive, onMounted, watch,
+  ref, reactive, onMounted, watch, onUnmounted,
 } from 'vue';
 import { useApiStore } from '@/stores/api';
 import { useRoute, useRouter } from 'vue-router';
@@ -209,12 +209,15 @@ const getData = (params = {}) => {
     });
 };
 
-onMounted(() => {
-  getData(state.filters);
-});
-
 watch(state.filters, (filters) => {
   getData(filters);
 });
 
+onMounted(() => {
+  getData(state.filters);
+});
+
+onUnmounted(() => {
+  if (state.chart) state.chart.destroyChart();
+});
 </script>

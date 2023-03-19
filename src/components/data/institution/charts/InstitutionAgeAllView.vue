@@ -68,7 +68,7 @@
     <div
       ref="chart"
       v-loading="state.isLoading"
-      style="height: calc(100vh - 400px)"
+      style="height: calc(100vh - 460px)"
     />
 
     <ChartLegend :legends="state.chartLegends[state.mode]" />
@@ -90,7 +90,7 @@
 
 <script setup>
 import {
-  ref, reactive, onMounted, watch,
+  ref, reactive, onMounted, watch, onUnmounted,
 } from 'vue';
 import { useApiStore } from '@/stores/api';
 import { useRoute, useRouter } from 'vue-router';
@@ -202,11 +202,15 @@ const setMode = (value) => {
   state.chart.updateConfig(state.chartConfig);
 };
 
+watch(state.filters, (filters) => {
+  getData(filters);
+});
+
 onMounted(() => {
   getData(state.filters);
 });
 
-watch(state.filters, (filters) => {
-  getData(filters);
+onUnmounted(() => {
+  if (state.chart) state.chart.destroyChart();
 });
 </script>
