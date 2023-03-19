@@ -5,7 +5,9 @@
         <div class="table-pagination__total">
           {{ pagination.total }} resultados
         </div>
-        <div class="table-pagination__pages">
+        <div
+          v-if="pagination.total > pagination.pageSize"
+          class="table-pagination__pages">
           <el-pagination
             small
             background
