@@ -7,7 +7,8 @@
         </div>
         <div
           v-if="pagination.total > pagination.pageSize"
-          class="table-pagination__pages">
+          class="table-pagination__pages"
+        >
           <el-pagination
             small
             background

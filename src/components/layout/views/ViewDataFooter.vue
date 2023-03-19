@@ -31,7 +31,7 @@ const getRoute = () => {
     query.instanceName = props.instance.full_name;
   }
 
-  return { name: 'contact', query  };
+  return { name: 'contact', query };
 };
 </script>
 

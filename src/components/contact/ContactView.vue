@@ -33,12 +33,12 @@ onBeforeMount(() => {
   if (!route.query || !route.query.topic) return;
 
   if (route.query.topic === 'data') {
-    state.form.subject = "Corrección de datos"
+    state.form.subject = 'Corrección de datos';
   }
 });
 
 const sendEmail = () => {
-  console.log('send email', JSON.parse(JSON.stringify(state.form)));
+  console.log('send email', JSON.parse(JSON.stringify(state.form))); // eslint-disable-line
 };
 </script>
 

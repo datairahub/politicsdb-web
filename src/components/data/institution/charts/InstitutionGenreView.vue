@@ -34,16 +34,13 @@
         cuales no ha sido posible determinar su género.
       </p>
     </div>
-
   </main>
 </template>
-
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import { useApiStore } from '@/stores/api';
 import { useRoute, useRouter } from 'vue-router';
-import { timeFormat } from 'd3-time-format';
 import Charts from '@/services/charts/Charts';
 import Colors from '@/services/colors/Colors';
 import Parser from '@/services/parser/Parser';
@@ -93,7 +90,6 @@ const state = reactive({
 });
 
 const updateChart = (rawData) => {
-
   state.chartData = rawData
     .reduce((acc, curr) => {
       const idx = acc.findIndex((d) => d.period === curr.id);
@@ -117,7 +113,7 @@ const updateChart = (rawData) => {
             name: curr.name,
             color: Colors.genre[curr.genre],
           }],
-        })
+        });
       }
       return acc;
     }, [])

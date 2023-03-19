@@ -1,11 +1,10 @@
 <template>
   <el-form class="contact-form" label-position="top">
-
     <el-form-item label="Tu email">
       <el-input
         v-model="state.from"
         placeholder="lorem@ipsum.com"
-        :class="{'has-errors': fromHasErrors}"
+        :class="{ 'has-errors': fromHasErrors }"
       />
       <div v-if="fromHasErrors" class="el-form-item__error">
         <div v-if="state.from === ''">
@@ -21,7 +20,7 @@
       <el-input
         v-model="state.subject"
         placeholder="Asunto"
-        :class="{'has-errors': state.subject === ''}"
+        :class="{ 'has-errors': state.subject === '' }"
       />
       <div v-if="state.subject === ''" class="el-form-item__error">
         Campo obligatorio
@@ -34,7 +33,7 @@
         :autosize="{ minRows: 6, maxRows: 10 }"
         type="textarea"
         placeholder="Mensaje"
-        :class="{'has-errors': state.message === ''}"
+        :class="{ 'has-errors': state.message === '' }"
       />
       <div v-if="state.message === ''" class="el-form-item__error">
         Campo obligatorio
@@ -46,11 +45,10 @@
         type="primary"
         :disabled="!isValidForm"
         @click="emit('send')"
-        >
+      >
         Enviar
       </el-button>
     </el-form-item>
-
   </el-form>
 </template>
 
@@ -99,18 +97,12 @@ const state = reactive({
   }),
 });
 
-const isValidEmail = computed(() => {
-  return Check.isValidEmail(state.from);
-});
+const isValidEmail = computed(() => Check.isValidEmail(state.from));
 
-const fromHasErrors = computed(() => {
-  return state.from === '' || !Check.isValidEmail(state.from);
-});
+const fromHasErrors = computed(() => state.from === '' || !Check.isValidEmail(state.from));
 
-const isValidForm = computed(() => {
-  return state.from !== '' &&
-    isValidEmail &&
-    state.subject !== '' &&
-    state.message !== '';
-});
+const isValidForm = computed(() => state.from !== ''
+    && isValidEmail
+    && state.subject !== ''
+    && state.message !== '');
 </script>

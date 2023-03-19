@@ -7,11 +7,15 @@
 
     <p>
       Puedes descargar la base de datos completa en la sección
-      <router-link :to="{ name: 'download' }">Descargar datos</router-link>.
+      <router-link :to="{ name: 'download' }">
+        Descargar datos
+      </router-link>.
     </p>
     <p>
       Puedes explorar los datos faltantes en la sección
-      <router-link :to="{ name: 'missing' }">Datos faltantes</router-link>.
+      <router-link :to="{ name: 'missing' }">
+        Datos faltantes
+      </router-link>.
     </p>
 
     <h2>Instituciones</h2>

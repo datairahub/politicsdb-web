@@ -116,7 +116,7 @@ export default class extends d3chart {
     const yMax = this.cfg.scales.yMaxOverride === null
       ? d3.max(flatData, (d) => d.value)
       : this.cfg.scales.yMaxOverride;
-    
+
     const xValues = this.data
       .reduce((acc, curr) => (acc.includes(curr.id) ? acc : acc.concat(curr.id)), []);
 
@@ -157,9 +157,8 @@ export default class extends d3chart {
     this.xAxis
       .attr('transform', `translate(0,${this.cfg.height})`)
       .call(d3.axisBottom(this.xScale).tickFormat(this.cfg.axis.xFormat));
-
   }
-  
+
   /**
    * Add new chart's elements
    */
@@ -231,6 +230,6 @@ export default class extends d3chart {
    * Remove chart's elements without data
    */
   exitElements() {
-    // this.barsgroup.exit().style('opacity', 0).remove();
+    this.barsgroup.exit().style('opacity', 0).remove();
   }
 }

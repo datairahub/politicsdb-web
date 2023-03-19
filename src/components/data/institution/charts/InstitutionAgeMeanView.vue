@@ -84,7 +84,6 @@
         cuales no ha sido posible determinar su fecha de nacimiento.
       </p>
     </div>
-
   </main>
 </template>
 

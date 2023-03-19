@@ -19,10 +19,10 @@ export default class {
     },
     {
       id: 'genre',
-      name: 'Presencia por género',
+      name: 'Miembros por género',
       image: 'genre',
       desc: 'Total de miembros por género que han formado parte de la institución.',
-      body: 'Cada barra representa el número total de miembros que han formado parte de la institución en cada uno de sus periodos.',
+      body: 'Cada barra representa el número total de miembros de la institución que han formado parte en algún momento de cada uno de sus periodos.',
     },
   ];
 
