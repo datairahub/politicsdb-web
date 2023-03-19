@@ -38,7 +38,7 @@ export default class extends d3chart {
         top: 20,
         right: 20,
         bottom: 20,
-        left: 40,
+        left: 20,
       },
       color: 'steelblue', // Accepts strings, array or object
       attrs: {},

@@ -71,6 +71,19 @@
     />
 
     <ChartLegend :legends="state.chartLegends[state.filters.split]" />
+
+    <div v-if="state.hasDateCount" class="chart-notes">
+      <strong>Nota:</strong>
+      <p>
+        El gráfico representa datos de un total de {{ Parser.numFormatter(state.hasDateCount) }}
+        miembros pertenecientes a esta institución para los cuales ha sido posible determinar
+        su fecha de nacimiento.
+      </p>
+      <p v-if="state.noHasDateCount > 0">
+        Faltan datos de {{ Parser.numFormatter(state.noHasDateCount) }} miembros para los
+        cuales no ha sido posible determinar su fecha de nacimiento.
+      </p>
+    </div>
   </main>
 </template>
 
@@ -98,6 +111,8 @@ const state = reactive({
   isLoading: false,
   institution: {},
   data: [],
+  hasDateCount: 0,
+  noHasDateCount: 0,
   chart: null,
   mode: 'all',
   options: [
@@ -185,6 +200,8 @@ const getData = (params = {}) => {
   api.retrieve('institution-age-mean', route.params.institutionid, params, false)
     .then((data) => {
       state.institution = data.instance;
+      state.hasDateCount = data.has_date;
+      state.noHasDateCount = data.no_date;
       updateChart(data.periods);
     })
     .finally(() => {

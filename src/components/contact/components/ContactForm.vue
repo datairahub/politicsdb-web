@@ -104,7 +104,7 @@ const isValidEmail = computed(() => {
 });
 
 const fromHasErrors = computed(() => {
-  return state.from === '' || !isValidEmail;
+  return state.from === '' || !Check.isValidEmail(state.from);
 });
 
 const isValidForm = computed(() => {

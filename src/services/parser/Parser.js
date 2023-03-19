@@ -145,27 +145,23 @@ export default class Parser {
   }
 
   /**
-   * Round and format numbers with prefix and suffix
+   * Round and format numbers
    * @param {number} number: number to format
-   * @param {string} prefix
-   * @param {string} suffix
    * @param {integer} decimalPlaces
    * @param {string} thousandsSeparator
    * @param {string} decimalSeparator
    * @returns {string} formatted number
    */
-  static numFormatter(number, prefix = '', suffix = '', decimalPlaces = 0, thousandsSeparator = '', decimalSeparator = '') {
+  static numFormatter(number, decimalPlaces = 0, thousandsSeparator = '.', decimalSeparator = ',') {
     if (Number.isNaN(Number(number))) return '0';
     const num = number || 0;
-    const pre = prefix || '';
-    const suf = suffix || '';
     const decimals = decimalPlaces || 0;
     const thousands = thousandsSeparator || '';
     const decimalsSep = decimalSeparator || '';
     const parts = (+num).toFixed(decimals).split('.');
     const realPart = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, `$1${thousands}`);
     const decimalPart = parts[1] || '';
-    return `${pre}${realPart}${decimalPart.length ? decimalsSep : ''}${decimalPart}${suf}`;
+    return `${realPart}${decimalPart.length ? decimalsSep : ''}${decimalPart}`;
   }
 
   /**
