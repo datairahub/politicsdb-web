@@ -24,9 +24,4 @@ export default [
     name: 'license',
     component: () => import('@/components/license/LicenseView.vue'),
   },
-  {
-    path: '/download',
-    name: 'download',
-    component: () => import('@/components/download/DownloadView.vue'),
-  },
 ];

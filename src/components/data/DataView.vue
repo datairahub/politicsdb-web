@@ -1,12 +1,13 @@
 <template>
   <main v-loading="state.isLoading" class="main main--data">
+    <el-breadcrumb>
+      <el-breadcrumb-item>Datos</el-breadcrumb-item>
+    </el-breadcrumb>
     <h1>Explorar datos</h1>
 
     <p>
       Puedes descargar la base de datos completa en la sección
-      <router-link :to="{ name: 'download' }">
-        Descargar datos
-      </router-link>.
+      <router-link :to="{ name: 'download' }">Descargar datos</router-link>.
     </p>
 
     <h2>Instituciones</h2>

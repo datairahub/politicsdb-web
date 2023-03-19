@@ -1,12 +1,17 @@
 <template>
-  <main class="main main--text download-view">
+  <main class="main main--data download-view">
+    <el-breadcrumb>
+      <el-breadcrumb-item :to="{ name: 'data' }">
+        Datos
+      </el-breadcrumb-item>
+      <el-breadcrumb-item>Descarga</el-breadcrumb-item>
+    </el-breadcrumb>
+
     <h1>Descargar datos</h1>
 
     <p>
       Puedes explorar los datos dirigiéndote a la sección
-      <router-link :to="{ name: 'data' }">
-        Explorar datos
-      </router-link>.
+      <router-link :to="{ name: 'data' }">Explorar datos</router-link>.
     </p>
 
     <h2>Descargar base de datos completa</h2>

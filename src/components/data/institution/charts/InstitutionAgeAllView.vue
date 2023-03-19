@@ -35,7 +35,7 @@
           </el-select>
         </div>
       </div>
-      <div class="chart-controls__block">
+      <div v-show="state.mode === 'genre'" class="chart-controls__block">
         <div class="chart-controls__label">
           Filtrar por
         </div>
@@ -68,7 +68,7 @@
     <div
       ref="chart"
       v-loading="state.isLoading"
-      style="height: calc(100vh - 200px)"
+      style="height: calc(100vh - 400px)"
     />
 
     <ChartLegend :legends="state.chartLegends[state.mode]" />
@@ -176,6 +176,9 @@ const getData = (params = {}) => {
 };
 
 const setMode = (value) => {
+  if (value === 'all') {
+    state.filters.genre = '';
+  }
   Object.keys(state.chartModes[value]).forEach((key) => {
     state.chartConfig[key] = state.chartModes[value][key];
   });
