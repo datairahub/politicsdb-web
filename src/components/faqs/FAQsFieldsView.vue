@@ -1,7 +1,7 @@
 <template>
   <main class="main main--faqs main--text faqs-fields">
     <el-breadcrumb>
-      <el-breadcrumb-item  :to="{ name: 'faqs' }">
+      <el-breadcrumb-item :to="{ name: 'faqs' }">
         FAQs
       </el-breadcrumb-item>
       <el-breadcrumb-item>Modelos</el-breadcrumb-item>
@@ -14,15 +14,17 @@
       :key="model.name"
       :title="model.name"
       :column="1"
-      border>
+      border
+    >
       <template #extra>
-        {{getDescription(model)}}
+        {{ getDescription(model) }}
       </template>
       <el-descriptions-item
         v-for="field in model.fields"
         :key="field.name"
-        :label="field.name">
-        {{field.help_text}}.
+        :label="field.name"
+      >
+        {{ field.help_text }}.
       </el-descriptions-item>
     </el-descriptions>
   </main>
@@ -49,9 +51,7 @@ const getData = () => {
     });
 };
 
-const getDescription = (model) => {
-  return model.description.replace('\n', '').trim();
-}
+const getDescription = (model) => model.description.replace('\n', '').trim();
 
 getData();
 </script>
