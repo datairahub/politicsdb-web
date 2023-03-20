@@ -9,6 +9,11 @@
 
     <h1>Descargar datos</h1>
 
+    <p>
+      Puedes consultar los modelos de datos y la descripción de sus campos en la sección
+      <router-link :to="{ name: 'faqs-fields' }">Modelos</router-link>.
+    </p>
+
     <h2>Descargar base de datos completa</h2>
 
     <p>

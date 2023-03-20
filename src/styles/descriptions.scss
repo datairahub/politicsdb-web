@@ -1,0 +1,17 @@
+/* DESCRIPTIONS TABLES
+*****************************************/
+.el-descriptions {
+  .el-descriptions__header {
+    margin-top: 20px;
+    margin-bottom: 4px;
+    gap: 20px;
+  }
+  .el-descriptions__body {
+    .el-descriptions__table {
+      .el-descriptions__label {
+        font-weight: 500;
+        color: var(--text-color-default);
+      }
+    }
+  }
+}

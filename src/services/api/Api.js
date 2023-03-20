@@ -17,6 +17,9 @@ class ApiService {
     switch (endpoint) {
       /* eslint-disable no-multi-spaces */
 
+      // Universe
+      case 'universe-fields':       return `${base}${api}universe/fields/`;
+
       // Positions
       case 'institution':           return `${base}${api}position/institution/${id}`;
       case 'period':                return `${base}${api}position/period/${id}`;

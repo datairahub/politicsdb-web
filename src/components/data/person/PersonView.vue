@@ -1,5 +1,12 @@
 <template>
   <main v-loading="state.isLoading" class="main main--data">
+    <el-breadcrumb>
+      <el-breadcrumb-item :to="{ name: 'data' }">
+        Datos
+      </el-breadcrumb-item>
+      <el-breadcrumb-item>{{ state.person.full_name }}</el-breadcrumb-item>
+    </el-breadcrumb>
+
     <h1>{{ state.person.full_name }}</h1>
 
     <PersonInfo

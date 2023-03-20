@@ -20,6 +20,11 @@ export default [
     component: () => import('@/components/faqs/FAQsView.vue'),
   },
   {
+    path: '/faqs/fields',
+    name: 'faqs-fields',
+    component: () => import('@/components/faqs/FAQsFieldsView.vue'),
+  },
+  {
     path: '/license',
     name: 'license',
     component: () => import('@/components/license/LicenseView.vue'),
