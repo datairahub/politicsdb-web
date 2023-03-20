@@ -197,7 +197,7 @@ const updateChart = (rawData) => {
 const getData = (params = {}) => {
   if (state.isLoading) return;
   state.isLoading = true;
-  api.retrieve('institution-age-mean', route.params.institutionid, params, false)
+  api.retrieve('institution-age-mean', route.params.institutionid, params)
     .then((data) => {
       state.institution = data.instance;
       state.hasDateCount = data.has_date;
